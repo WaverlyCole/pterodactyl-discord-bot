@@ -69,19 +69,23 @@ bot.on("messageCreate", async message => {
         let commandArgs = {}
         for (let i = 0; i < commandfile.cmdargs; i++) {
             const argumentdata = commandfile.cmdargs[i]
-            if (argumentdata.required) {
-                let argisvalid = false;
-                if (typeof args[i] == argumentdata.type) {
-                    if (argumentdata.type == 'string') {
-                        commandArgs[argumentdata.name] = args.slice(i)
-                    } else {
-                        commandArgs[argumentdata.name] = args[i]
-                    }
+
+            if (!args[i]) return message.channel.send('The argument ${argumentdata.name} (${argumentdata.type}) is required.');
+
+            if (typeof args[i] == argumentdata.type) {
+                if (argumentdata.type == 'string') {
+                    commandArgs[argumentdata.name] = args.slice(i)
                 } else {
-                    return message.channel.send('Expected argument type ${argumentdata.type} and receieved type ${typeof args[i]}.')
+                    commandArgs[argumentdata.name] = args[i]
                 }
+            } else {
+                return message.channel.send('Expected argument type ${argumentdata.type} and receieved type ${typeof args[i]}.')
             }
         }
+
+        commandfile.run(bot, message, commandArgs);
+    } else {
+        message.channel.send('No command was found.')
     }
 
     //if(commandfile) commandfile.run(bot,message,args);
