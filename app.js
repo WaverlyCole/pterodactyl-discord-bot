@@ -1,4 +1,5 @@
-const { prefix, token } = require("./config.json");
+require('dotenv').config()
+const { prefix } = require("./config.json");
 
 const { Client, Intents, Collection } = require('discord.js');
 const bot = new Client({ 
