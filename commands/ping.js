@@ -2,10 +2,16 @@ module.exports = {
     config: {
         name: 'ping',
         description: 'Get ping of the bot',
-        usage: `!ping`,
         rnk: 'Admin',
+        cmdargs: [
+            {name: 'message', type: 'string', required: false},
+        ]
     },
-    async run (bot,message,args) {
-        message.channel.send("My ping is \`" + bot.ws.ping + " ms\`");
+    async run (bot, message, args) {
+        if (args.message) {
+            message.channel.send("${args.message} \`" + bot.ws.ping + " ms\`");
+        } else {
+            message.channel.send("Pong! \`" + bot.ws.ping + " ms\`");
+        }
     }
 }

@@ -1,5 +1,5 @@
-require('dotenv').config();
-const { prefix } = require("./config.json");
+require('dotenv').config()
+const prefix = require("./config.json").prefix;
 
 const { Client, Intents, Collection } = require('discord.js');
 const bot = new Client({ 
@@ -11,6 +11,10 @@ const bot = new Client({
 });
 
 const fs = require("fs");
+
+const jsoning = require(jsoning);
+bot.db = new jsoning('db.json');
+bot.pterodactylkeys = new jsoning('pterodactylapis.json');
 
 bot.commands = new Collection();
 
@@ -48,7 +52,7 @@ for (const file of eventFiles) {
 bot.on("messageCreate", async message => {
     //Check if author is a bot or the message was sent in dms and return
     if(message.author.bot) return;
-    if(message.channel.type === "dm") return;
+    //if(message.channel.type === "dm") return message.channel.send('I am not currently listening to my private messages. Sorry!');
 
     //get prefix from config and prepare message so it can be read as a command
     let messageArray = message.content.split(" ");
@@ -60,8 +64,27 @@ bot.on("messageCreate", async message => {
 
     //Get the command from the commands collection and then if the command is found run the command file
     let commandfile = bot.commands.get(cmd.slice(prefix.length));
-    if(commandfile) commandfile.run(bot,message,args);
 
+    if (commandfile) {
+        let commandArgs = {}
+        for (let i = 0; i < commandfile.cmdargs; i++) {
+            const argumentdata = commandfile.cmdargs[i]
+            if (argumentdata.required) {
+                let argisvalid = false;
+                if (typeof args[i] == argumentdata.type) {
+                    if (argumentdata.type == 'string') {
+                        commandArgs[argumentdata.name] = args.slice(i)
+                    } else {
+                        commandArgs[argumentdata.name] = args[i]
+                    }
+                } else {
+                    return message.channel.send('Expected argument type ${argumentdata.type} and receieved type ${typeof args[i]}.')
+                }
+            }
+        }
+    }
+
+    //if(commandfile) commandfile.run(bot,message,args);
 });
 
 //Token
