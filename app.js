@@ -12,7 +12,7 @@ const bot = new Client({
 
 const fs = require("fs");
 
-const jsoning = require(jsoning);
+const jsoning = require('jsoning');
 bot.db = new jsoning('db.json');
 bot.pterodactylkeys = new jsoning('pterodactylapis.json');
 
