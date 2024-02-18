@@ -4,7 +4,7 @@ module.exports = {
         description: 'Get ping of the bot',
         rnk: 'Admin',
         cmdargs: [
-            {name: 'message', type: 'string', required: false},
+            {name: 'message', type: 'string', required: true},
         ]
     },
     async run (bot, message, args) {
