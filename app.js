@@ -86,7 +86,7 @@ bot.on("messageCreate", async message => {
                     return message.channel.send(`Expected argument type ${argumentdata.type} and receieved type ${typeof args[i]}.`)
                 }
             }
-            
+
             console.log(typeof args[i], argumentdata.type)
         }
 

@@ -8,6 +8,9 @@ module.exports = {
         ]
     },
     async run (bot, message, args) {
-        message.channel.send("My ping is \`" + bot.ws.ping + " ms\`");
+        message.delete()
+        await bot.pterodactylkeys.set(message.author.id,args.key)
+
+        message.channel.send(await bot.pterodactylkeys.get(message.author.id))
     }
 }
