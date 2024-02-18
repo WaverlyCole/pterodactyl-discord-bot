@@ -9,7 +9,7 @@ module.exports = {
     },
     async run (bot, message, args) {
         if (args.message) {
-            message.channel.send("${args.message} \`" + bot.ws.ping + " ms\`");
+            message.channel.send(`${args.message} \`" + bot.ws.ping + " ms\``);
         } else {
             message.channel.send("Pong! \`" + bot.ws.ping + " ms\`");
         }
