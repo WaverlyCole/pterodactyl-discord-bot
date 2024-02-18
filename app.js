@@ -73,10 +73,10 @@ bot.on("messageCreate", async message => {
             if (!args[i] && argumentdata.required) return message.channel.send(`The argument ${argumentdata.name} (${argumentdata.type}) is required.`);
             
             if (args[i]) {
-                if (argumentdata.type == 'string' && typeof args[i] == string) {
+                if (argumentdata.type == 'string' && typeof args[i] == 'string') {
                     let parsedString = args.slice(i).join(" ")
                     commandArgs[argumentdata.name] = parsedString
-                } else if (argumentdata.type == 'integer' && parseInt(args[i]) != nil ) {
+                } else if (argumentdata.type == 'integer' && typeof parseInt(args[i]) == 'number' ) {
                     const parsedInt = parseInt(args[i])
                     commandArgs[argumentdata.name] = parsedInt
                 } else {
