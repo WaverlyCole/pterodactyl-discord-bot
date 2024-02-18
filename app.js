@@ -59,8 +59,6 @@ bot.on("messageCreate", async message => {
     let cmd = messageArray[0]
     let args = messageArray.slice(1)
 
-    console.log(args)
-
     //Check for prefix
     if(!cmd.startsWith(prefix)) return;
 
@@ -68,7 +66,6 @@ bot.on("messageCreate", async message => {
     const commandfile = bot.commands.get(cmd.slice(prefix.length));
 
     if (commandfile) {
-        console.log(commandfile)
         let commandArgs = {}
         for (let i = 0; i < commandfile.config.cmdargs.length; i++) {
             const argumentdata = commandfile.config.cmdargs[i]
@@ -76,21 +73,17 @@ bot.on("messageCreate", async message => {
             if (!args[i] && argumentdata.required) return message.channel.send(`The argument ${argumentdata.name} (${argumentdata.type}) is required.`);
             
             if (args[i]) {
-                if (typeof args[i] == argumentdata.type) {
-                    if (argumentdata.type == 'string') {
-                        commandArgs[argumentdata.name] = args.slice(i)
-                    } else {
-                        commandArgs[argumentdata.name] = args[i]
-                    }
+                if (argumentdata.type == 'string' && typeof args[i] == string) {
+                    let parsedString = args.slice(i).join(" ")
+                    commandArgs[argumentdata.name] = parsedString
+                } else if (argumentdata.type == 'integer' && parseInt(args[i]) != nil ) {
+                    const parsedInt = parseInt(args[i])
+                    commandArgs[argumentdata.name] = parsedInt
                 } else {
-                    return message.channel.send(`Expected argument type ${argumentdata.type} and receieved type ${typeof args[i]}.`)
+                    commandArgs[argumentdata.name] = args[i]
                 }
             }
-
-            console.log(typeof args[i], argumentdata.type)
         }
-
-        console.log(commandArgs)
         commandfile.run(bot, message, commandArgs);
     } else {
         message.channel.send('No command was found.')

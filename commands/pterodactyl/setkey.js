@@ -10,7 +10,7 @@ module.exports = {
     async run (bot, message, args) {
         message.delete()
         await bot.pterodactylkeys.set(message.author.id,args.key)
-
-        message.channel.send(await bot.pterodactylkeys.get(message.author.id))
+        const value = await bot.pterodactylkeys.get(message.author.id)
+        message.channel.send(value)
     }
 }
