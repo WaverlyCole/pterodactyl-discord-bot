@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 const { prefix } = require("./config.json");
 
 const { Client, Intents, Collection } = require('discord.js');
