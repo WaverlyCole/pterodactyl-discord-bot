@@ -1,7 +1,7 @@
 require('dotenv').config()
 const prefix = require("./config.json").prefix;
 
-const { Client, Intents, Collection } = require('discord.js');
+const { Client, Intents, Collection } = require('discord.js')
 const bot = new Client({ 
     intents: [
         Intents.FLAGS.GUILDS, 
@@ -10,13 +10,13 @@ const bot = new Client({
     ] 
 });
 
-const fs = require("fs");
+const fs = require("fs")
 
-const jsoning = require('jsoning');
-bot.db = new jsoning('db.json');
+const jsoning = require('jsoning')
+bot.db = new jsoning('db.json')
 bot.pterodactylkeys = new jsoning('pterodactylapis.json');
 
-bot.commands = new Collection();
+bot.commands = new Collection()
 
 const commandFiles = fs.readdirSync('./commands/').filter(f => f.endsWith('.js'))
 for (const file of commandFiles) {
@@ -55,9 +55,11 @@ bot.on("messageCreate", async message => {
     //if(message.channel.type === "dm") return message.channel.send('I am not currently listening to my private messages. Sorry!');
 
     //get prefix from config and prepare message so it can be read as a command
-    let messageArray = message.content.split(" ");
-    let cmd = messageArray[0];
-    let args = messageArray.slice(1);
+    let messageArray = message.content.split(" ")
+    let cmd = messageArray[0]
+    let args = messageArray.slice(1)
+
+    console.log(args)
 
     //Check for prefix
     if(!cmd.startsWith(prefix)) return;
@@ -83,6 +85,7 @@ bot.on("messageCreate", async message => {
             }
         }
 
+        console.log(commandArgs)
         commandfile.run(bot, message, commandArgs);
     } else {
         message.channel.send('No command was found.')
