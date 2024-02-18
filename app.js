@@ -73,7 +73,7 @@ bot.on("messageCreate", async message => {
         for (let i = 0; i < commandfile.config.cmdargs.length; i++) {
             const argumentdata = commandfile.config.cmdargs[i]
 
-            if (!args[i]) return message.channel.send(`The argument ${argumentdata.name} (${argumentdata.type}) is required.`);
+            if (!args[i] && argumentdata.required) return message.channel.send(`The argument ${argumentdata.name} (${argumentdata.type}) is required.`);
 
             console.log(typeof args[i], argumentdata.type)
 
