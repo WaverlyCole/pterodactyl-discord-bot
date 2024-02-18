@@ -74,6 +74,8 @@ bot.on("messageCreate", async message => {
 
             if (!args[i]) return message.channel.send('The argument ${argumentdata.name} (${argumentdata.type}) is required.');
 
+            console.log(typeof args[i], argumentdata.type)
+
             if (typeof args[i] == argumentdata.type) {
                 if (argumentdata.type == 'string') {
                     commandArgs[argumentdata.name] = args.slice(i)
