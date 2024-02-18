@@ -65,11 +65,12 @@ bot.on("messageCreate", async message => {
     if(!cmd.startsWith(prefix)) return;
 
     //Get the command from the commands collection and then if the command is found run the command file
-    let commandfile = bot.commands.get(cmd.slice(prefix.length));
+    const commandfile = bot.commands.get(cmd.slice(prefix.length));
 
     if (commandfile) {
+        console.log(commandfile)
         let commandArgs = {}
-        for (let i = 0; i < commandfile.cmdargs.length; i++) {
+        for (let i = 0; i < commandfile.config.cmdargs.length; i++) {
             const argumentdata = commandfile.cmdargs[i]
 
             if (!args[i]) return message.channel.send('The argument ${argumentdata.name} (${argumentdata.type}) is required.');
