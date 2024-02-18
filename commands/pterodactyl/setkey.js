@@ -10,6 +10,6 @@ module.exports = {
     async run (bot, message, args) {
         message.delete()
         await bot.pterodactylkeys.set(message.author.id,args.key)
-        message.channel.send(value)
+        message.channel.send("Your key has been set!")
     }
 }
