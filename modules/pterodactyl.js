@@ -11,7 +11,7 @@ const grabAPIKey = async (bot, id) => {
     return key;
 };
 
-const checkvalidkey = async (bot, key) => {
+async function checkvalidkey(bot, key) {
     try {
         const response = await axios.get(`${pteroURL}/api/client`, {
             "headers": {
@@ -32,7 +32,7 @@ const checkvalidkey = async (bot, key) => {
     }
 };
 
-const getrunningstate = async (bot, key, identifier) => {
+async function getrunningstate(bot, key, identifier) {
     try {
         const requestURL = `${pteroURL}/api/client/servers/${identifier}/resources`
         let serverInfo = webcache.get(requestURL)
@@ -64,7 +64,7 @@ const getrunningstate = async (bot, key, identifier) => {
     }
 };
 
-const getallservers = async (bot, key) => {
+async function getallservers(bot, key) {
     try {
         const requestURL = `${pteroURL}/api/client`
         let serverArray = webcache.get(requestURL + key)
