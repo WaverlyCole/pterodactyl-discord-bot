@@ -72,7 +72,7 @@ module.exports = {
     },
     async run (bot, message, args) {
         let newMessageID = ""
-        let channelID = message.channelID
+        let channelID = message.channelId
         message.channel.send("Monitoring servers...(message will update shortly)").then(newMessage => {
             newMessageID = newMessage.id
 
