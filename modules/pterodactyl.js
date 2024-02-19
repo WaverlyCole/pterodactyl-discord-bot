@@ -9,6 +9,25 @@ module.exports = {
         const key = await bot.pterodactylkeys.get(id);
         return key;
     },
+    async getrunningstate(bot, identifier) {
+        const response = await axios.get(`${pteroURL}/api/client/servers/${identifier}/resources`, {
+            "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${key}`,
+            }
+         })
+
+        if (!response.statusText == "OK") {
+            throw new Error('Failed to fetch data'); 
+        }
+
+        const serverInfo = response.data
+
+        console.log(serverInfo)
+
+        return serverInfo.attributes.current_state
+    },
     async getallservers(bot, key) {
         const response = await axios.get(`${pteroURL}/api/client`, {
             "headers": {
