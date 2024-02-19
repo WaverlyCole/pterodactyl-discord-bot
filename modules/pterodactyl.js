@@ -37,8 +37,6 @@ const getrunningstate = async (bot, key, identifier) => {
         const requestURL = `${pteroURL}/api/client/servers/${identifier}/resources`
         let serverInfo = webcache.get(requestURL)
 
-        console.log("CACHE RESULT")
-
         if (!serverInfo) {
             console.log("NO CACHE SENDING REQUEST")
             let response = await axios.get(requestURL, {
@@ -55,9 +53,9 @@ const getrunningstate = async (bot, key, identifier) => {
 
         serverInfo = response.data;
         webcache.set(requestURL,serverInfo);
+        } else {
+            console.log("FOUND CACHE")
         }
-
-        console.log(serverInfo);
 
         return serverInfo.attributes.current_state;
     } catch(error) {
