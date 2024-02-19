@@ -65,7 +65,7 @@ async function startUpdatingMessages() {
 
                 for (let key in allServers) {
                         function round(num) {
-                            return Math.round(number * 10) / 10
+                            return Math.round(num * 10) / 10
                         }
 
                         const status = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier)
