@@ -50,41 +50,6 @@ for (const file of eventFiles) {
         bot.on(event.name, (...args) => event.execute(...args, bot))
     }
 }
-//Voice handler
-bot.on('voiceStateUpdate', async (oldState, newState) => {
-    if (newState.member.user.bot) return; // Ignore if it's a bot
-    if (!newState.member.user.id == "1176182260731490366") return;
-
-    const voiceChannel = newState.channel;
-
-    // Check if the bot is already in a voice channel
-    let botVoiceConnection;
-    try {
-        botVoiceConnection = bot.voice.connections.find(connection => connection.channel.guild.id === newState.guild.id);
-    } catch (error) {
-        //console.error('Error finding bot voice connection:', error);
-    }
-
-    if (!voiceChannel) { // User left the voice channel
-        if (botVoiceConnection && botVoiceConnection.channel.guild.id === oldState.guild.id) {
-            // Check if there are no other members left in the voice channel
-            if (botVoiceConnection.channel.members.size === 1) {
-                botVoiceConnection.channel.leave();
-                console.log(`Bot has left ${botVoiceConnection.channel.name}`);
-            }
-        }
-    } else { // User joined a voice channel
-        // Join the voice channel the user just entered
-        if (!botVoiceConnection) {
-            try {
-                const connection = await voiceChannel.join();
-                console.log(`Bot has joined ${voiceChannel.name}`);
-            } catch (error) {
-                console.error('Failed to join voice channel:', error);
-            }
-        }
-    }
-});
 
 //Command Manager
 bot.on("messageCreate", async message => {
