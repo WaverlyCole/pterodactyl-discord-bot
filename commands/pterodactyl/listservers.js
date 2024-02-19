@@ -12,13 +12,14 @@ module.exports = {
 
         const { MessageEmbed } = require('discord.js');
 
+        const embed = new MessageEmbed()
+            .setTitle('Your Servers')
+            .setDescription("Here is a list of all servers you currently have access to")
+
         for (let key in allServers) {
-            const newEmbed = new MessageEmbed()
-                .setTitle(key)
-                .setDescription(allServers[key].description)
-                .addField("Identifier",allServers[key].identifier)
-            
-            message.channel.send({ embeds: [newEmbed] });
+                embed.addField(key,allServers[key].identifier);
         }
+
+        message.channel.send({ embeds: [embed] });
     }
 }
