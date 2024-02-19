@@ -23,6 +23,6 @@ module.exports = {
             throw new Error('Failed to fetch data'); 
         }
         const data = response.data
-        return data;
+        return data.data;
     }
 }
