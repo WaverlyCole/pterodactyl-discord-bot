@@ -17,6 +17,14 @@ bot.db = new jsoning('db.json')
 bot.pterodactylkeys = new jsoning('pterodactylapis.json');
 
 bot.commands = new Collection()
+bot.modules = {}
+
+const moduleFiles = fs.readdirSync('./modules/').filter(f => f.endsWith('.js'))
+for (const file of moduleFiles) {
+    const props = require(`./modules/${file}`)
+    console.log(`${file} loaded`)
+    bot.modules[file] = props
+}
 
 const commandFiles = fs.readdirSync('./commands/').filter(f => f.endsWith('.js'))
 for (const file of commandFiles) {
