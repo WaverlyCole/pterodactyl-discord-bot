@@ -13,8 +13,8 @@ const monitoringdb = new jsoning('servermonitor.json')
 const bot = require('../../bot').bot;
 
 async function startUpdatingMessages() {
-    console.log("UPDATING MONITORS")
     setInterval(async () => {
+        console.log("UPDATING MONITORS")
         const allMonitors = monitoringdb.all();
 
         const userids = Object.keys(allMonitors);
@@ -23,6 +23,7 @@ async function startUpdatingMessages() {
             const pterodactyl = bot.modules.pterodactyl
             try {
                 const guild = bot.guilds.cache.get(765647938469888001);
+                console.log(guild)
                 const channel = guild.channels.cache.get(allMonitors[userid].channel)
                 const message = channel.messages.fetch(allMonitors[userid].message)
                 const userAPIKey = await pterodactyl.grabAPIKey(bot, message.author.id)
@@ -49,7 +50,6 @@ async function startUpdatingMessages() {
                 }
 
                 message.edit({ content: ' ', embeds: [embed] })
-                startUpdatingMessages();
             } catch(error) {
                 console.log(error)
             }
