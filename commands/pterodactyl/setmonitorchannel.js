@@ -84,7 +84,7 @@ async function startUpdatingMessages() {
                 console.log(error)
             }
         });
-    }, 60 * 1000);
+    }, 30 * 1000);
 }
 
 startUpdatingMessages()
