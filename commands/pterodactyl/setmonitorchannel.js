@@ -46,12 +46,12 @@ async function startUpdatingMessages() {
                 }
 
                 message.edit({ content: ' ', embeds: [embed] })
+                startUpdatingMessages();
             } catch(error) {
                 
             }
         }
     }, 10 * 1000);
-    startUpdatingMessages();
 }
 
 startUpdatingMessages()
