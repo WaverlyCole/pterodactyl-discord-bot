@@ -52,7 +52,7 @@ async function getrunningstate(bot, key, identifier) {
         webcache.set(requestURL,serverInfo);
         }
 
-        return serverInfo.attributes.attributes;
+        return serverInfo.attributes;
     } catch(error) {
         console.log(error);
         return null
