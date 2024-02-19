@@ -43,7 +43,7 @@ async function startUpdatingMessages() {
                     await monitoringdb.set(userid, { channel: newMessage.channelId, message: newMessage.id, guild: newMessage.guildId });
                     message = newMessage;
                 }
-                
+
                 const userAPIKey = await pterodactyl.grabAPIKey(bot, userid)
                 if (!userAPIKey) return monitoringdb.delete(message.author.id);
 
@@ -73,7 +73,7 @@ async function startUpdatingMessages() {
                 console.log(error)
             }
         });
-    }, 10 * 1000);
+    }, 60 * 1000);
 }
 
 startUpdatingMessages()
@@ -86,8 +86,9 @@ module.exports = {
         cmdargs: []
     },
     async run (bot, message, args) {
-        message.channel.send("Monitoring servers...(message will update shortly)").then(newMessage => {
-            monitoringdb.set(message.author.id,{channel: newMessage.channelId, message: newMessage.id, guild: newMessage.guildId})
+        message.channel.send("Monitoring servers...(message will update shortly)").then(async newMessage => {
+           await monitoringdb.set(message.author.id,{channel: newMessage.channelId, message: newMessage.id, guild: newMessage.guildId});
+           message.delete()
         })
     }
 }
