@@ -22,7 +22,7 @@ module.exports = {
                 const userAPIKey = await pterodactyl.grabAPIKey(bot, message.author.id)
 
                 if (!userAPIKey) {
-                    return sentMessage.edit("No pteodactyl API key is set. Use setkey.")
+                    return sentMessage.edit("No pterodactyl API key is set. Use setkey.")
                 }
 
                 const allServers = await pterodactyl.getallservers(bot, userAPIKey)

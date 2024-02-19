@@ -20,7 +20,7 @@ module.exports = {
                     await bot.pterodactylkeys.set(message.author.id,args.key)
                     sentMessage.edit("Your key has been set!")
                 } else {
-                    sentMessage.edit("The key is invalid!")
+                    sentMessage.edit("Your key is invalid!")
                 }
             })
     }
