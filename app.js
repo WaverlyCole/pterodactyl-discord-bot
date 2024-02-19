@@ -56,6 +56,24 @@ bot.on("messageCreate", async message => {
     //Check if author is a bot
     if(message.author.bot) return;
 
+    if (!message.author.bot) {
+        message.react(":eyes:")
+
+        setTimeout(async () => {
+            try {
+                const fetchedMessage = await message.fetch();
+                const botId = bot.user.id;
+                fetchedMessage.reactions.cache.forEach(async reaction => {
+                    if (reaction.users.cache.has(botId)) {
+                        await reaction.users.remove(botId);
+                    }
+                });
+            } catch (error) {
+                console.error('Failed to remove reaction:', error);
+            }
+        }, 2 * 1000);
+    }
+
     //get prefix from config and prepare message so it can be read as a command
     let messageArray = message.content.split(" ")
     let cmd = messageArray[0]
@@ -89,24 +107,6 @@ bot.on("messageCreate", async message => {
         commandfile.run(bot, message, commandArgs);
     } else {
         message.channel.send('No command was found.')
-    }
-
-    if (!message.author.bot) {
-        message.react(":eyes:")
-
-        setTimeout(async () => {
-            try {
-                const fetchedMessage = await message.fetch();
-                const botId = bot.user.id;
-                fetchedMessage.reactions.cache.forEach(async reaction => {
-                    if (reaction.users.cache.has(botId)) {
-                        await reaction.users.remove(botId);
-                    }
-                });
-            } catch (error) {
-                console.error('Failed to remove reaction:', error);
-            }
-        }, 2 * 1000);
     }
 });
 
