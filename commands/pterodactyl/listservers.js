@@ -6,7 +6,6 @@ module.exports = {
         cmdargs: []
     },
     async run (bot, message, args) {
-        console.log(bot.modules)
         const pterodactyl = bot.modules.pterodactyl
         const userAPIKey = await pterodactyl.grabAPIKey(bot, message.author.id)
         const allServers = await pterodactyl.getallservers(bot, userAPIKey)
