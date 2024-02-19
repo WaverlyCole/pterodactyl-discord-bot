@@ -5,7 +5,7 @@ const bot = new Client({
         Intents.FLAGS.GUILDS, 
         Intents.FLAGS.GUILD_MESSAGES,
         Intents.FLAGS.GUILD_MEMBERS,
-        Intents.Flags.GUILD_VOICE_STATES
+        Intents.FLAGS.GUILD_VOICE_STATES
     ] 
 });
 
