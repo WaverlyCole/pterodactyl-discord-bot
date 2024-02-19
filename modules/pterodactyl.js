@@ -25,6 +25,7 @@ module.exports = {
         const serverInfo = response.data
 
         console.log(serverInfo)
+        console.log(serverInfo.attributes.current_state)
 
         return serverInfo.attributes.current_state
     },
