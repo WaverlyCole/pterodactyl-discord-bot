@@ -1,19 +1,7 @@
-# Discord.js Discord bot template
-Basic bot template with command handler and event handler.
+Bot requires a ``.env`` file. Here is an example:
 
-## This is being updated to discord.js v14 and to use slash commands
-
-**This README is gonna be rewritten later**
-
-Change Token and prefix in ``config.json``
-
-Make commands in ``commands`` folder.
-
-There is ``ping`` command in ``commands`` folder
-the default prefix of the bot is ``!`` you can change this in the ``config.json``
-### Prerequisites
-
-What things you need to install the software and how to install them:
+TOKEN=[bot token here]
+PTERODACTYLURL=[url to pterodactyl panel here]
 
 ```
 Node.js
@@ -64,3 +52,8 @@ to install nodemon globally type `npm i -g nodemon`
 
 * [Node.js](https://nodejs.org/en/) - the base that the bot runs on
 * [discord.js](https://discord.js.org/#/) - node.js link to the discord bot api
+
+## Requires
+* [dotenv]
+* [jsoning]
+* [axios]
