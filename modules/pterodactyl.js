@@ -4,11 +4,11 @@ const pteroURL = process.env.PTERODACTYLURL
 
 module.exports = {
     cache: {serverlookup: {}},
-    async grabAPIKey(id) {
+    async grabAPIKey(bot, id) {
         const key = await bot.pterodactylkeys.get(id)
         return key
     },
-    async getallservers(key) {
+    async getallservers(bot, key) {
         return fetch(`${pteroURL}/api/client`, {
         "method": "GET",
         "headers": {
