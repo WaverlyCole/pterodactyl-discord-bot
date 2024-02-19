@@ -22,7 +22,7 @@ module.exports = {
                         embed.addField(key,allServers[key].identifier);
                 }
 
-                sentMessage.edit({ content: '', embeds: [embed] })
+                sentMessage.edit({ content: 'Done!', embeds: [embed] })
             })
     }
 }
