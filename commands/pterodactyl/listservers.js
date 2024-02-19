@@ -18,7 +18,7 @@ module.exports = {
                 .setDescription(allServers[key].description)
                 .addField("Identifier",allServers[key].identifier)
             
-            message.channel.send({ newEmbed })
+            message.channel.send({ embeds: [newEmbed] });
         }
     }
 }
