@@ -81,6 +81,8 @@ const getallservers = async (bot, key) => {
     
             serverArray = response.data.data;
             webcache.set(requestURL,serverArray)
+        } else {
+            console.log("USING CACHE")
         }
         
         const serverList = {};
