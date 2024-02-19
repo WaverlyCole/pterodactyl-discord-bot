@@ -23,7 +23,7 @@ module.exports = {
             throw new Error('Failed to fetch data'); 
         }
 
-        const serverArray = JSON.parse(response.data.data);
+        const serverArray = response.data.data;
         const serverList = {};
 
         serverArray.forEach(server => {
