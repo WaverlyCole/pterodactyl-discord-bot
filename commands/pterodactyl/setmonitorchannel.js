@@ -18,7 +18,7 @@ async function startUpdatingMessages() {
         const guild = bot.guilds.cache.get(765647938469888001);
         const allMonitors = monitoringdb.all();
 
-        const userids = Object.keys(allEntries);
+        const userids = Object.keys(allMonitors);
 
         userids.forEach(async userid => {
             const pterodactyl = bot.modules.pterodactyl
