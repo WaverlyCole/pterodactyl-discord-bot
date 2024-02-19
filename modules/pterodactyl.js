@@ -38,7 +38,6 @@ const getrunningstate = async (bot, key, identifier) => {
         let serverInfo = webcache.get(requestURL)
 
         if (!serverInfo) {
-            console.log("NO CACHE SENDING REQUEST")
             let response = await axios.get(requestURL, {
                 "headers": {
                     "Accept": "application/json",
@@ -53,8 +52,6 @@ const getrunningstate = async (bot, key, identifier) => {
 
         serverInfo = response.data;
         webcache.set(requestURL,serverInfo);
-        } else {
-            console.log("FOUND CACHE")
         }
 
         return serverInfo.attributes.current_state;
@@ -67,21 +64,26 @@ const getrunningstate = async (bot, key, identifier) => {
 
 const getallservers = async (bot, key) => {
     try {
-        const response = await axios.get(`${pteroURL}/api/client`, {
-            "headers": {
-                "Accept": "application/json",
-                "Authorization": `Bearer ${key}`,
+        const requestURL = `${pteroURL}/api/client`
+        let serverArray = webcache.get(requestURL)
+
+        if (!serverArray) {
+            const response = await axios.get(requestURL, {
+                "headers": {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${key}`,
+                }
+             })
+    
+            if (!response.statusText == "OK") {
+                throw new Error('Failed to fetch data'); 
             }
-         })
-
-        if (!response.statusText == "OK") {
-            throw new Error('Failed to fetch data'); 
+    
+            serverArray = response.data.data;
+            webcache.set(requestURL,serverArray)
         }
-
-        const serverArray = response.data.data;
+        
         const serverList = {};
-
-        //console.log(serverArray)
 
         serverArray.forEach(server => {
             const serverName = server.attributes.name
