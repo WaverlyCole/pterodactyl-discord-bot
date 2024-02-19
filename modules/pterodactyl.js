@@ -38,7 +38,6 @@ const getrunningstate = async (bot, key, identifier) => {
         let serverInfo = webcache.get(requestURL)
 
         console.log("CACHE RESULT")
-        console.log(response)
 
         if (!serverInfo) {
             console.log("NO CACHE SENDING REQUEST")
@@ -64,6 +63,7 @@ const getrunningstate = async (bot, key, identifier) => {
     } catch(error) {
         console.log(error);
         return null
+
     }
 };
 
