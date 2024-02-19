@@ -22,12 +22,9 @@ module.exports = {
             throw new Error('Failed to fetch data'); 
         }
 
-        const serverInfo = response.data
+        const serverInfo = response.data;
 
-        console.log(serverInfo)
-        console.log(serverInfo.attributes.current_state)
-
-        return serverInfo.attributes.current_state
+        return serverInfo.attributes.current_state;
     },
     async getallservers(bot, key) {
         const response = await axios.get(`${pteroURL}/api/client`, {
