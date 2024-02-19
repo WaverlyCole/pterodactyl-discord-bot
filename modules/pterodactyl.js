@@ -20,7 +20,9 @@ module.exports = {
 
              if (!response.statusText == "OK") {
                 return false
-            }
+             }
+
+             console.log(typeof response.data)
 
              return true
         } catch (error) {
