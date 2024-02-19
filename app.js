@@ -53,9 +53,8 @@ for (const file of eventFiles) {
 
 //Command Manager
 bot.on("messageCreate", async message => {
-    //Check if author is a bot or the message was sent in dms and return
+    //Check if author is a bot
     if(message.author.bot) return;
-    //if(message.channel.type === "dm") return message.channel.send('I am not currently listening to my private messages. Sorry!');
 
     //get prefix from config and prepare message so it can be read as a command
     let messageArray = message.content.split(" ")
@@ -92,7 +91,23 @@ bot.on("messageCreate", async message => {
         message.channel.send('No command was found.')
     }
 
-    //if(commandfile) commandfile.run(bot,message,args);
+    if (!message.author.bot) {
+        message.react(":eyes:")
+
+        setTimeout(async () => {
+            try {
+                const fetchedMessage = await message.fetch();
+                const botId = bot.user.id;
+                fetchedMessage.reactions.cache.forEach(async reaction => {
+                    if (reaction.users.cache.has(botId)) {
+                        await reaction.users.remove(botId);
+                    }
+                });
+            } catch (error) {
+                console.error('Failed to remove reaction:', error);
+            }
+        }, 2 * 1000);
+    }
 });
 
 //Token
