@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const pteroURL = process.env.PTERODACTYLURL;
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 module.exports = {
     cache: {serverlookup: {}},
