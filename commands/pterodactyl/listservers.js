@@ -39,7 +39,7 @@ module.exports = {
 
                 for (let key in allServers) {
                         const status = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier)
-                        embed.addField(`${key} (${allServers[key].identifier})`, status_lookup[status.online_status]);
+                        embed.addField(`${key} (${allServers[key].identifier})`, status_lookup[status.current_state]);
                 }
 
                 sentMessage.edit({ content: ' ', embeds: [embed] })
