@@ -28,7 +28,10 @@ module.exports = {
 
         serverArray.forEach(server => {
             const serverName = server.attributes.name
-            const serverIdentifier = server.attributes.identifier
+            const serverInfo = {
+                identifier: server.attributes.identifier,
+                description: server.attributes.description
+            }
 
             serverList[serverName] = serverIdentifier
         });
