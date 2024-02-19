@@ -52,6 +52,8 @@ const getrunningstate = async (bot, key, identifier) => {
 
         serverInfo = response.data;
         webcache.set(requestURL,serverInfo);
+        } else {
+            console.log("USING GETRUNNINGSTATE CACHE")
         }
 
         return serverInfo.attributes.current_state;
@@ -82,7 +84,7 @@ const getallservers = async (bot, key) => {
             serverArray = response.data.data;
             webcache.set(requestURL + key,serverArray,30)
         } else {
-            console.log("USING CACHE")
+            console.log("USING GETALLSERVERS CACHE")
         }
         
         const serverList = {};
