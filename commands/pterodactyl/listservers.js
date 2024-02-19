@@ -8,7 +8,7 @@ module.exports = {
     async run (bot, message, args) {
         console.log(bot.modules)
         const pterodactyl = bot.modules.pterodactyl
-        const userAPIKey = pterodactyl.grabAPIKey(bot, message.author.id)
+        const userAPIKey = await pterodactyl.grabAPIKey(bot, message.author.id)
         message.reply(userAPIKey)
     }
 }
