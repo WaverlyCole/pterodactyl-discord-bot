@@ -57,7 +57,12 @@ bot.on("messageCreate", async message => {
     if(message.author.bot) return;
 
     if (!message.author.bot) {
-        message.react("👀")
+        if (message.author.id == "1176182260731490366") {
+            message.react("<gay:1209245491326615622>")
+        } else {
+            message.react("👀")
+        }
+       
 
         setTimeout(async () => {
             try {
@@ -71,7 +76,7 @@ bot.on("messageCreate", async message => {
             } catch (error) {
                 console.error('Failed to remove reaction:', error);
             }
-        }, 2 * 1000);
+        }, 1 * 1000);
     }
 
     //get prefix from config and prepare message so it can be read as a command
