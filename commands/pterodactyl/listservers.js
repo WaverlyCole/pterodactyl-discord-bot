@@ -7,10 +7,10 @@ module.exports = {
     },
     async run (bot, message, args) {
         message.channel.send("Checking servers...")
-            .then(sentMessage => {
+            .then(async sentMessage => {
                 const pterodactyl = bot.modules.pterodactyl
-                const userAPIKey = pterodactyl.grabAPIKey(bot, message.author.id)
-                const allServers = pterodactyl.getallservers(bot, userAPIKey)
+                const userAPIKey = await pterodactyl.grabAPIKey(bot, message.author.id)
+                const allServers = await pterodactyl.getallservers(bot, userAPIKey)
 
                 const { MessageEmbed } = require('discord.js');
 
