@@ -60,7 +60,7 @@ async function startUpdatingMessages() {
                 const { MessageEmbed } = require('discord.js');
 
                 const embed = new MessageEmbed()
-                    .setTitle('Monitoring')
+                    .setTitle('Server Status')
                     .setTimestamp()
 
                 for (let key in allServers) {
@@ -69,13 +69,13 @@ async function startUpdatingMessages() {
                         }
 
                         const status = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier)
-                        const maxMem = round(allServers[key].limits.memory / 1024)
-                        const currMem = round(status.resources.memory_bytes / 1024 / 1024 / 1024)
-                        const maxDisk = round(allServers[key].limits.disk / 1024)
-                        const currDisk = round(status.resources.disk_bytes / 1024 / 1024 / 1024)
-                        const cpu = round(status.resources.cpu_absolute)
+                        const maxMem = allServers[key].limits.memory
+                        const currMem = status.resources.memory_bytes / 1024 / 1024
+                        const maxDisk = allServers[key].limits.disk
+                        const currDisk = status.resources.disk_bytes / 1024 / 1024
+                        const cpu = Math.round(status.resources.cpu_absolute)
 
-                        embed.addField(`${status_lookup[status.current_state]} ${key} (${allServers[key].identifier})`, `Mem: ${currMem}Gb/${maxMem}Gb Disk: ${currDisk}Gb/${maxDisk}Gb Cpu: ${cpu}`, true);
+                        embed.addField(`${status_lookup[status.current_state]} ${key} (${allServers[key].identifier})`, `Mem: ${round(currDisk/maxMem*100)}% Disk: ${round(currDisk/maxDisk*100)}% Cpu: ${cpu}%`, true);
                 }
                 
                 embed.setFooter("✅=Online ❌=Offline 🔃=Starting 🛑=Stopping")
