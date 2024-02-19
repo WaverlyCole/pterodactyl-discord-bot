@@ -4,7 +4,7 @@ const pteroURL = process.env.PTERODACTYLURL;
 const axios = require('axios');
 const NodeCache = require("node-cache");
 
-const webcache = new NodeCache({ stdTTL: 5 });
+const webcache = new NodeCache({ stdTTL: 10 });
 
 const grabAPIKey = async (bot, id) => {
     const key = await bot.pterodactylkeys.get(id);
@@ -65,7 +65,7 @@ const getrunningstate = async (bot, key, identifier) => {
 const getallservers = async (bot, key) => {
     try {
         const requestURL = `${pteroURL}/api/client`
-        let serverArray = webcache.get(requestURL)
+        let serverArray = webcache.get(requestURL + key)
 
         if (!serverArray) {
             const response = await axios.get(requestURL, {
@@ -80,7 +80,7 @@ const getallservers = async (bot, key) => {
             }
     
             serverArray = response.data.data;
-            webcache.set(requestURL,serverArray)
+            webcache.set(requestURL + key,serverArray,30)
         } else {
             console.log("USING CACHE")
         }
