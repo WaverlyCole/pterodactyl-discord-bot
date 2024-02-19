@@ -22,7 +22,17 @@ module.exports = {
         if (!response.statusText == "OK") {
             throw new Error('Failed to fetch data'); 
         }
-        const data = response.data
-        return data.data;
+
+        const serverArray = JSON.parse(response.data.data);
+        const serverList = {};
+
+        serverArray.forEach(server => {
+            const serverName = attributes.name
+            const serverIdentifier = attributr.identifier
+
+            serverList[serverName] = identifier
+        });
+
+        return serverList
     }
 }
