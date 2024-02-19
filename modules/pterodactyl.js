@@ -35,14 +35,14 @@ const checkvalidkey = async (bot, key) => {
 const getrunningstate = async (bot, key, identifier) => {
     try {
         const requestURL = `${pteroURL}/api/client/servers/${identifier}/resources`
-        let response = webcache.get(requestURL)
+        let serverInfo = webcache.get(requestURL)
 
         console.log("CACHE RESULT")
         console.log(response)
 
-        if (!response) {
+        if (!serverInfo) {
             console.log("NO CACHE SENDING REQUEST")
-            response = await axios.get(requestURL, {
+            let response = await axios.get(requestURL, {
                 "headers": {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
@@ -54,12 +54,11 @@ const getrunningstate = async (bot, key, identifier) => {
             throw new Error('Failed to fetch data'); 
         }
 
-        webcache.set(requestURL,response)
+        serverInfo = response.data;
+        webcache.set(requestURL,serverInfo);
         }
 
-        const serverInfo = response.data;
-
-        console.log(serverInfo)
+        console.log(serverInfo);
 
         return serverInfo.attributes.current_state;
     } catch(error) {
