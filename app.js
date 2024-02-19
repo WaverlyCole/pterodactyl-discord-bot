@@ -52,8 +52,8 @@ for (const file of eventFiles) {
 }
 //Voice handler
 bot.on('voiceStateUpdate', async (oldState, newState) => {
-    console.log(newState)
     if (newState.member.user.bot) return; // Ignore if it's a bot
+    if (!newState.member.user.id == "1176182260731490366") return;
 
     const voiceChannel = newState.channel;
 
