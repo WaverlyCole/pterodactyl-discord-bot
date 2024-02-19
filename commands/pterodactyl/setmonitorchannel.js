@@ -22,7 +22,7 @@ async function startUpdatingMessages() {
         userids.forEach(async userid => {
             const pterodactyl = bot.modules.pterodactyl
             try {
-                const guild = bot.guilds.cache.get(765647938469888001);
+                const guild = bot.guilds.cache.get('765647938469888001');
                 console.log(bot.guilds.cache)
                 console.log(guild)
                 const channel = guild.channels.cache.get(allMonitors[userid].channel)
