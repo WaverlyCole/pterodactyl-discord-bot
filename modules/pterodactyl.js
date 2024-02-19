@@ -27,7 +27,7 @@ module.exports = {
         //console.log(serverArray)
 
         serverArray.forEach(server => {
-            console.log(server.object)
+            console.log(server.attributes)
 
             //serverList[serverName] = identifier
         });
