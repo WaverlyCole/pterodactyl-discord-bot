@@ -17,14 +17,14 @@ module.exports = {
             }
          })
 
-        console.log(response)
-
         if (!response.statusText == "OK") {
             throw new Error('Failed to fetch data'); 
         }
 
         const serverArray = response.data.data;
         const serverList = {};
+
+        console.log(serverArray)
 
         serverArray.forEach(server => {
             const serverName = attributes.name
