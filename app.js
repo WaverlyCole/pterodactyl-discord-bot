@@ -57,10 +57,16 @@ bot.on("messageCreate", async message => {
     if(message.author.bot) return;
 
     if (!message.author.bot) {
-        if (message.author.id == "1176182260731490366") {
-            message.react("<gay:1209245491326615622>")
+        if (message.author.id == "254765343745114114") { //ty
+            message.react("<a:valentinehearts:1209247925977350214>");
+        } else if (message.author.id == "1176182260731490366") { //me
+            message.react("<a:gay:1209247930704203777>");
+        } else if (message.author.id == "195169523823935488") { //chris
+            message.react("<a:pepeeat:1209247927080587305>");
+        } else if (message.author.id == "692865328916594709") {
+            message.react("<a:purpleheart:1209252648130314240>"); //jess
         } else {
-            message.react("👀")
+            message.react("👀");
         }
        
 
