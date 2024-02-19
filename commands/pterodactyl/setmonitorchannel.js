@@ -23,9 +23,11 @@ async function startUpdatingMessages() {
             const pterodactyl = bot.modules.pterodactyl
             try {
                 const guild = bot.guilds.cache.get('765647938469888001');
-                console.log(guild)
-                console.log(allMonitors[userid].message)
-                console.log(typeof allMonitors[userid].message)
+
+                console.log(guild);
+                console.log(allMonitors[userid].message);
+                console.log(allMonitors[userid].channel);
+
                 const channel = guild.channels.cache.get(allMonitors[userid].channel)
                 const message = channel.messages.fetch(allMonitors[userid].message)
                 const userAPIKey = await pterodactyl.grabAPIKey(bot, message.author.id)
