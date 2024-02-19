@@ -41,7 +41,7 @@ const getrunningstate = async (bot, key, identifier) => {
         console.log(response)
 
         if (!response) {
-            console.log("NO CACHE SENGING REQUEST")
+            console.log("NO CACHE SENDING REQUEST")
             response = await axios.get(requestURL, {
                 "headers": {
                     "Accept": "application/json",
@@ -58,6 +58,8 @@ const getrunningstate = async (bot, key, identifier) => {
         }
 
         const serverInfo = response.data;
+
+        console.log(serverInfo)
 
         return serverInfo.attributes.current_state;
     } catch(error) {
