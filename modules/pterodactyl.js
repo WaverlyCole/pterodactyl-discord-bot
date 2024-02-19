@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const pteroURL = process.env.PTERODACTYLURL;
-const fetch = require('node-fetch');
+const axios = require('axios');
 
 module.exports = {
     cache: {serverlookup: {}},
@@ -10,8 +10,7 @@ module.exports = {
         return key;
     },
     async getallservers(bot, key) {
-        const response = await fetch(`${pteroURL}/api/client`, {
-            "method": "GET",
+        const response = axios.get(`${pteroURL}/api/client`, {
             "headers": {
                 "Accept": "application/json",
                 "Authorization": key,
@@ -20,10 +19,10 @@ module.exports = {
 
         console.log(response)
 
-        if (!response.ok) {
+        if (!response.statusText == "OK") {
             throw new Error('Failed to fetch data'); 
         }
-        const data = await response.body.json();
+        const data = response.data
         return data;
     }
 }
