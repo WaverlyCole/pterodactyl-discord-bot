@@ -58,7 +58,12 @@ bot.on('voiceStateUpdate', async (oldState, newState) => {
     const voiceChannel = newState.channel;
 
     // Check if the bot is already in a voice channel
-    const botVoiceConnection = bot.voice.connections.find(connection => connection.channel.guild.id === newState.guild.id);
+    let botVoiceConnection;
+    try {
+        botVoiceConnection = bot.voice.connections.find(connection => connection.channel.guild.id === newState.guild.id);
+    } catch (error) {
+        //console.error('Error finding bot voice connection:', error);
+    }
 
     if (!voiceChannel) { // User left the voice channel
         if (botVoiceConnection && botVoiceConnection.channel.guild.id === oldState.guild.id) {
