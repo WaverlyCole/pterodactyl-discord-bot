@@ -12,7 +12,7 @@ module.exports = {
 
         const { MessageEmbed } = require('discord.js');
 
-        for (let key in obj) {
+        for (let key in allServers) {
             //console.log(key + ': ' + obj[key]);
             const newEmbed = new MessageEmbed()
                 .setTitle(key)
