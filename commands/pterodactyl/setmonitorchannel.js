@@ -75,7 +75,7 @@ async function startUpdatingMessages() {
                         const currDisk = status.resources.disk_bytes / 1024 / 1024
                         const cpu = Math.round(status.resources.cpu_absolute)
 
-                        embed.addField(`${status_lookup[status.current_state]} ${key} (${allServers[key].identifier})`, `Mem: ${round(currDisk/maxMem*100)}% Disk: ${round(currDisk/maxDisk*100)}% Cpu: ${cpu}%`, false);
+                        embed.addField(`${status_lookup[status.current_state]} ${key} (${allServers[key].identifier})`, `Mem: ${round(currMem/maxMem*100)}% Disk: ${round(currDisk/maxDisk*100)}% Cpu: ${cpu}%`, false);
                 }
                 
                 embed.setFooter("✅=Online ❌=Offline 🔃=Starting 🛑=Stopping")
