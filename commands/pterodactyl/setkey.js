@@ -8,8 +8,20 @@ module.exports = {
         ]
     },
     async run (bot, message, args) {
+        const channel = message.channel
         message.delete()
-        await bot.pterodactylkeys.set(message.author.id,args.key)
-        message.channel.send("Your key has been set!")
+
+        channel.send("Checking key...")
+            .then(async sentMessage => {
+                const newkey = args.key
+                const isValid = bot.modules.pterodactyl.checkvalidkey(bot, newkey)
+
+                if (isValid) {
+                    await bot.pterodactylkeys.set(message.author.id,args.key)
+                    sentMessage.edit("Your key has been set!")
+                } else {
+                    sentMessage.edit("The key is invalid!")
+                }
+            })
     }
 }

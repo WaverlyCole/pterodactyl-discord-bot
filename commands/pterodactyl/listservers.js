@@ -20,7 +20,16 @@ module.exports = {
             .then(async sentMessage => {
                 const pterodactyl = bot.modules.pterodactyl
                 const userAPIKey = await pterodactyl.grabAPIKey(bot, message.author.id)
+
+                if (!userAPIKey) {
+                    return sentMessage.edit("No pteodactyl API key is set. Use setkey.")
+                }
+
                 const allServers = await pterodactyl.getallservers(bot, userAPIKey)
+
+                if (!allServers) {
+                    return sentMessage.edit("Failed to load servers. Make sure you have a valid API key.")
+                }
 
                 const { MessageEmbed } = require('discord.js');
 

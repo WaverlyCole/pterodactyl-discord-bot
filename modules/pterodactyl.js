@@ -9,50 +9,78 @@ module.exports = {
         const key = await bot.pterodactylkeys.get(id);
         return key;
     },
-    async getrunningstate(bot, key, identifier) {
-        const response = await axios.get(`${pteroURL}/api/client/servers/${identifier}/resources`, {
-            "headers": {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${key}`,
+    async checkvalidkey(bot, key) {
+        try {
+            const response = await axios.get(`${pteroURL}/api/client`, {
+                "headers": {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${key}`,
+                }
+             })
+
+             if (!response.statusText == "OK") {
+                return false
             }
-         })
 
-        if (!response.statusText == "OK") {
-            throw new Error('Failed to fetch data'); 
+             return true
+        } catch (error) {
+            return false
         }
-
-        const serverInfo = response.data;
-
-        return serverInfo.attributes.current_state;
+    },
+    async getrunningstate(bot, key, identifier) {
+        try {
+            const response = await axios.get(`${pteroURL}/api/client/servers/${identifier}/resources`, {
+                "headers": {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${key}`,
+                }
+             })
+    
+            if (!response.statusText == "OK") {
+                throw new Error('Failed to fetch data'); 
+            }
+    
+            const serverInfo = response.data;
+    
+            return serverInfo.attributes.current_state;
+        } catch(error) {
+            console.log(error);
+            return null
+        }
     },
     async getallservers(bot, key) {
-        const response = await axios.get(`${pteroURL}/api/client`, {
-            "headers": {
-                "Accept": "application/json",
-                "Authorization": `Bearer ${key}`,
+        try {
+            const response = await axios.get(`${pteroURL}/api/client`, {
+                "headers": {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${key}`,
+                }
+             })
+    
+            if (!response.statusText == "OK") {
+                throw new Error('Failed to fetch data'); 
             }
-         })
-
-        if (!response.statusText == "OK") {
-            throw new Error('Failed to fetch data'); 
+    
+            const serverArray = response.data.data;
+            const serverList = {};
+    
+            //console.log(serverArray)
+    
+            serverArray.forEach(server => {
+                const serverName = server.attributes.name
+                const serverInfo = {
+                    identifier: server.attributes.identifier,
+                    description: server.attributes.description
+                }
+    
+                serverList[serverName] = serverInfo
+            });
+    
+            return serverList
+        } catch (error) {
+            console.log(error)
+            return null
         }
-
-        const serverArray = response.data.data;
-        const serverList = {};
-
-        //console.log(serverArray)
-
-        serverArray.forEach(server => {
-            const serverName = server.attributes.name
-            const serverInfo = {
-                identifier: server.attributes.identifier,
-                description: server.attributes.description
-            }
-
-            serverList[serverName] = serverInfo
-        });
-
-        return serverList
     }
 }
