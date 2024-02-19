@@ -23,7 +23,8 @@ const moduleFiles = fs.readdirSync('./modules/').filter(f => f.endsWith('.js'))
 for (const file of moduleFiles) {
     const props = require(`./modules/${file}`)
     console.log(`${file} loaded`)
-    bot.modules[file] = props
+    const trimmedFilename = filename.replace(/\.js$/, '');
+    bot.modules[trimmedFilename] = props
 }
 
 const commandFiles = fs.readdirSync('./commands/').filter(f => f.endsWith('.js'))
