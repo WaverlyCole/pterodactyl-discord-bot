@@ -12,7 +12,7 @@ const jsoning = require('jsoning')
 const monitoringdb = new jsoning('servermonitor.json')
 const bot = require('../../bot').bot;
 
-async function startUpdatingMessages(channel, messageId = null) {
+async function startUpdatingMessages() {
     setInterval(async () => {
         const guild = bot.guilds.cache.get(765647938469888001);
         const allMonitors = monitoringdb.all();
@@ -50,7 +50,8 @@ async function startUpdatingMessages(channel, messageId = null) {
                 
             }
         }
-    }, 30 * 1000);
+    }, 10 * 1000);
+    startUpdatingMessages();
 }
 
 startUpdatingMessages()
