@@ -10,7 +10,7 @@ module.exports = {
         return key;
     },
     async getallservers(bot, key) {
-        const response = axios.get(`${pteroURL}/api/client`, {
+        const response = await axios.get(`${pteroURL}/api/client`, {
             "headers": {
                 "Accept": "application/json",
                 "Authorization": key,
