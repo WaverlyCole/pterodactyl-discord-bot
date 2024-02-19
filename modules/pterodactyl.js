@@ -24,13 +24,12 @@ module.exports = {
         const serverArray = response.data.data;
         const serverList = {};
 
-        console.log(serverArray)
+        //console.log(serverArray)
 
         serverArray.forEach(server => {
-            const serverName = attributes.name
-            const serverIdentifier = attributr.identifier
+            console.log(server)
 
-            serverList[serverName] = identifier
+            //serverList[serverName] = identifier
         });
 
         return serverList
