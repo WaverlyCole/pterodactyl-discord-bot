@@ -22,27 +22,28 @@ async function startUpdatingMessages() {
         userids.forEach(async userid => {
             const pterodactyl = bot.modules.pterodactyl
             try {
-                const guild = bot.guilds.cache.get(allMonitors[userid].guild)
-                    .catch(error => {
-                        console.log("REMOVED MONITOR CAUSE CANT FIND GUILD")
-                        return monitoringdb.delete(message.author.id);
-                    });
+                const guild = bot.guilds.cache.get(allMonitors[userid].guild);
+                if (!guild) {
+                    console.log("REMOVED MONITOR CAUSE CANT FIND GUILD");
+                    await monitoringdb.delete(message.author.id);
+                    return; // Exit the function or handle it appropriately
+                }
 
-                const channel = guild.channels.cache.get(allMonitors[userid].channel)
-                    .catch(error => {
-                        console.log("REMOVED MONITOR CAUSE CANT FIND CHANNEL")
-                        return monitoringdb.delete(message.author.id);
-                    });
+                const channel = guild.channels.cache.get(allMonitors[userid].channel);
+                if (!channel) {
+                    console.log("REMOVED MONITOR CAUSE CANT FIND CHANNEL");
+                    await monitoringdb.delete(message.author.id);
+                    return; // Exit the function or handle it appropriately
+                }
 
-                let message = await channel.messages.fetch(allMonitors[userid].message)
-                    .catch(async error => {
-                        console.log("MONITOR CANT FIND MESSAGE MAKING NEW ONE")
-                        await channel.send("Monitoring servers...(message will update shortly)").then(async newMessage => {
-                            await monitoringdb.set(userid,{channel: newMessage.channelId, message: newMessage.id, guild: newMessage.guildId})
-                            message = newMessage
-                        })
-                    });
-
+                let message = await channel.messages.fetch(allMonitors[userid].message);
+                if (!message) {
+                    console.log("MONITOR CANT FIND MESSAGE MAKING NEW ONE");
+                    const newMessage = await channel.send("Monitoring servers...(message will update shortly)");
+                    await monitoringdb.set(userid, { channel: newMessage.channelId, message: newMessage.id, guild: newMessage.guildId });
+                    message = newMessage;
+                }
+                
                 const userAPIKey = await pterodactyl.grabAPIKey(bot, userid)
                 if (!userAPIKey) return monitoringdb.delete(message.author.id);
 
