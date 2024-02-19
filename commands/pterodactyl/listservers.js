@@ -1,3 +1,13 @@
+const status_lookup = {
+    starting: "Starting 🔃",
+    running: "Online ✅",
+    stopping: "Stopping 🛑",
+    offline: "Offline ❎",
+    error: "Error ⚠️",
+    suspended: "Suspended ⛔",
+    rebooting: "Rebooting 🔃",
+}
+
 module.exports = {
     config: {
         name: 'listservers',
@@ -6,7 +16,7 @@ module.exports = {
         cmdargs: []
     },
     async run (bot, message, args) {
-        message.channel.send("Checking servers...")
+        message.reply("Checking servers...")
             .then(async sentMessage => {
                 const pterodactyl = bot.modules.pterodactyl
                 const userAPIKey = await pterodactyl.grabAPIKey(bot, message.author.id)
@@ -20,7 +30,7 @@ module.exports = {
 
                 for (let key in allServers) {
                         const onlineStatus = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier)
-                        embed.addField(`${key} (${allServers[key].identifier})`, `Status: ${onlineStatus}`);
+                        embed.addField(`${key} (${allServers[key].identifier})`, status_lookup[onlineStatus]);
                 }
 
                 sentMessage.edit({ content: ' ', embeds: [embed] })
