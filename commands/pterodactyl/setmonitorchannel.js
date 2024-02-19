@@ -30,7 +30,7 @@ async function startUpdatingMessages() {
 
                 const channel = guild.channels.cache.get(allMonitors[userid].channel)
                 const message = channel.messages.fetch(allMonitors[userid].message)
-                const userAPIKey = await pterodactyl.grabAPIKey(bot, message.author.id)
+                const userAPIKey = await pterodactyl.grabAPIKey(bot, userid)
 
                 if (!userAPIKey) {
                     return console.log("No api key!")
