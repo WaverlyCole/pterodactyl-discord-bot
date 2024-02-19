@@ -15,7 +15,6 @@ const bot = require('../../bot').bot;
 async function startUpdatingMessages() {
     console.log("UPDATING MONITORS")
     setInterval(async () => {
-        const guild = bot.guilds.cache.get(765647938469888001);
         const allMonitors = monitoringdb.all();
 
         const userids = Object.keys(allMonitors);
@@ -23,6 +22,7 @@ async function startUpdatingMessages() {
         userids.forEach(async userid => {
             const pterodactyl = bot.modules.pterodactyl
             try {
+                const guild = bot.guilds.cache.get(765647938469888001);
                 const channel = guild.channels.cache.get(allMonitors[userid].channel)
                 const message = channel.messages.fetch(allMonitors[userid].message)
                 const userAPIKey = await pterodactyl.grabAPIKey(bot, message.author.id)
