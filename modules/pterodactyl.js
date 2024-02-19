@@ -54,7 +54,7 @@ const getrunningstate = async (bot, key, identifier) => {
             throw new Error('Failed to fetch data'); 
         }
 
-        webcache.set(requestURL,result)
+        webcache.set(requestURL,response)
         }
 
         const serverInfo = response.data;
