@@ -13,7 +13,7 @@ module.exports = {
         const response = await axios.get(`${pteroURL}/api/client`, {
             "headers": {
                 "Accept": "application/json",
-                "Authorization": key,
+                "Authorization": `Bearer ${key}`,
             }
          })
 
