@@ -36,8 +36,12 @@ const getrunningstate = async (bot, key, identifier) => {
     try {
         const requestURL = `${pteroURL}/api/client/servers/${identifier}/resources`
         let response = webcache.get(requestURL)
-        
+
+        console.log("CACHE RESULT")
+        console.log(response)
+
         if (!response) {
+            console.log("NO CACHE SENGING REQUEST")
             response = await axios.get(requestURL, {
                 "headers": {
                     "Accept": "application/json",
