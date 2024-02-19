@@ -82,7 +82,7 @@ bot.on("messageCreate", async message => {
             } catch (error) {
                 console.error('Failed to remove reaction:', error);
             }
-        }, 1 * 1000);
+        }, 2 * 1000);
     }
 
     //get prefix from config and prepare message so it can be read as a command
