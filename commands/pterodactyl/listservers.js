@@ -6,22 +6,23 @@ module.exports = {
         cmdargs: []
     },
     async run (bot, message, args) {
-        const reply = message.channel.send("Checking servers...")
-        
-        const pterodactyl = bot.modules.pterodactyl
-        const userAPIKey = await pterodactyl.grabAPIKey(bot, message.author.id)
-        const allServers = await pterodactyl.getallservers(bot, userAPIKey)
+        message.channel.send("Checking servers...")
+            .then(sentMessage => {
+                const pterodactyl = bot.modules.pterodactyl
+                const userAPIKey = pterodactyl.grabAPIKey(bot, message.author.id)
+                const allServers = pterodactyl.getallservers(bot, userAPIKey)
 
-        const { MessageEmbed } = require('discord.js');
+                const { MessageEmbed } = require('discord.js');
 
-        const embed = new MessageEmbed()
-            .setTitle('Your Servers')
-            .setDescription("Here is a list of all servers you currently have access to")
+                const embed = new MessageEmbed()
+                    .setTitle('Your Servers')
+                    .setDescription("Here is a list of all servers you currently have access to")
 
-        for (let key in allServers) {
-                embed.addField(key,allServers[key].identifier);
-        }
+                for (let key in allServers) {
+                        embed.addField(key,allServers[key].identifier);
+                }
 
-        reply.edit({ content: '', embeds: [embed] })
+                sentMessage.edit({ content: '', embeds: [embed] })
+            })
     }
 }
