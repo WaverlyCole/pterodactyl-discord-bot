@@ -35,8 +35,8 @@ async function startUpdatingMessages() {
                 let message = await channel.messages.fetch(allMonitors[userid].message)
                 if (!message) {
                     await channel.send("Monitoring servers...(message will update shortly)").then(async newMessage => {
+                        message = newMessage
                         await monitoringdb.set(message.author.id,{channel: newMessage.channelId, message: newMessage.id, guild: newMessage.guildId})
-                        message = await channel.messages.fetch(newMessage.id)
                     })
                 }
                 const userAPIKey = await pterodactyl.grabAPIKey(bot, userid)
