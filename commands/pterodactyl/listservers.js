@@ -6,6 +6,8 @@ module.exports = {
         cmdargs: []
     },
     async run (bot, message, args) {
+        const reply = message.channel.send("Checking servers...")
+        
         const pterodactyl = bot.modules.pterodactyl
         const userAPIKey = await pterodactyl.grabAPIKey(bot, message.author.id)
         const allServers = await pterodactyl.getallservers(bot, userAPIKey)
@@ -20,6 +22,6 @@ module.exports = {
                 embed.addField(key,allServers[key].identifier);
         }
 
-        message.channel.send({ embeds: [embed] });
+        reply.edit({ content: '', embeds: [embed] })
     }
 }
