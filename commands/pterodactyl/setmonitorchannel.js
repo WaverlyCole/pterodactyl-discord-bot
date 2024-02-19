@@ -1,11 +1,11 @@
 const status_lookup = {
-    starting: "Starting 🔃",
-    running: "Online ✅",
-    stopping: "Stopping 🛑",
-    offline: "Offline ❌",
-    error: "Error ⚠️",
-    suspended: "Suspended ⛔",
-    rebooting: "Rebooting 🔃",
+    starting: "🔃",
+    running: "✅",
+    stopping: "🛑",
+    offline: "❌",
+    error: "⚠️",
+    suspended: "⛔",
+    rebooting: "🔃",
 }
 
 const jsoning = require('jsoning')
@@ -64,10 +64,21 @@ async function startUpdatingMessages() {
                     .setTimestamp()
 
                 for (let key in allServers) {
-                        const onlineStatus = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier)
-                        embed.addField(`${key} (${allServers[key].identifier})`, status_lookup[onlineStatus]);
-                }
+                        function round(num) {
+                            return Math.round(number * 10) / 10
+                        }
 
+                        const status = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier)
+                        const maxMem = round(allServers[key].limits.memory / 1024)
+                        const currMem = round(status.resources.memory_bytes / 1024 / 1024 / 1024)
+                        const maxDisk = round(allServers[key].limits.disk / 1024)
+                        const currDisk = round(status.resources.disk_bytes / 1024 / 1024 / 1024)
+                        const cpu = round(status.resources.cpu_absolute)
+
+                        embed.addField(`${status_lookup[status.online_status]} ${key} (${allServers[key].identifier})`, `Mem: ${currMem}Gb/${maxMem}Gb Disk: ${currDisk}Gb/${maxDisk}Gb Cpu: ${cpu}`, true);
+                }
+                
+                embed.setFooter("✅=Online ❌=Offline 🔃=Starting 🛑=Stopping")
                 message.edit({ content: ' ', embeds: [embed] })
             } catch(error) {
                 console.log(error)

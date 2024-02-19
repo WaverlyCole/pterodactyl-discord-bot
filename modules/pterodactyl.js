@@ -52,7 +52,7 @@ async function getrunningstate(bot, key, identifier) {
         webcache.set(requestURL,serverInfo);
         }
 
-        return serverInfo.attributes.current_state;
+        return serverInfo.attributes.attributes;
     } catch(error) {
         console.log(error);
         return null
@@ -87,7 +87,8 @@ async function getallservers(bot, key) {
             const serverName = server.attributes.name
             const serverInfo = {
                 identifier: server.attributes.identifier,
-                description: server.attributes.description
+                description: server.attributes.description,
+                limits: server.attributes.limits
             }
 
             serverList[serverName] = serverInfo
