@@ -33,7 +33,7 @@ module.exports = {
                 description: server.attributes.description
             }
 
-            serverList[serverName] = serverIdentifier
+            serverList[serverName] = serverInfo
         });
 
         return serverList
