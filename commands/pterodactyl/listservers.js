@@ -2,7 +2,7 @@ const status_lookup = {
     starting: "Starting 🔃",
     running: "Online ✅",
     stopping: "Stopping 🛑",
-    offline: "Offline ❎",
+    offline: "Offline ❌",
     error: "Error ⚠️",
     suspended: "Suspended ⛔",
     rebooting: "Rebooting 🔃",
