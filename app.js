@@ -2,7 +2,7 @@ require('dotenv').config()
 const prefix = require("./config.json").prefix;
 
 const { Client, Intents, Collection } = require('discord.js')
-const bot = require('./bot')
+const bot = require('./bot').bot;
 
 const fs = require("fs")
 

@@ -10,7 +10,7 @@ const status_lookup = {
 
 const jsoning = require('jsoning')
 const monitoringdb = new jsoning('servermonitor.json')
-const bot = require('../../bot')
+const bot = require('../../bot').bot;
 
 async function startUpdatingMessages(channel, messageId = null) {
     setInterval(async () => {
