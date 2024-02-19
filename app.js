@@ -57,7 +57,7 @@ bot.on("messageCreate", async message => {
     if(message.author.bot) return;
 
     if (!message.author.bot) {
-        message.react(":eyes:")
+        message.react("👀")
 
         setTimeout(async () => {
             try {
