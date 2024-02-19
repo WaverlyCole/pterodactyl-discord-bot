@@ -19,7 +19,7 @@ module.exports = {
                     .setDescription("Here is a list of all servers you currently have access to")
 
                 for (let key in allServers) {
-                        const onlineStatus = await pterodactyl.getrunningstate(bot, allServers[key].identifier)
+                        const onlineStatus = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier)
                         embed.addField(`${key} (${allServers[key].identifier})`,) `Status: ${onlineStatus}`;
 
                         sentMessage.edit({ content: ' ', embeds: [embed] })

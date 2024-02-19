@@ -9,7 +9,7 @@ module.exports = {
         const key = await bot.pterodactylkeys.get(id);
         return key;
     },
-    async getrunningstate(bot, identifier) {
+    async getrunningstate(bot, key, identifier) {
         const response = await axios.get(`${pteroURL}/api/client/servers/${identifier}/resources`, {
             "headers": {
                 "Accept": "application/json",
