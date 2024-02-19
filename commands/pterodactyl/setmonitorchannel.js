@@ -1,11 +1,11 @@
 const status_lookup = {
-    starting: "🔃",
-    running: "✅",
-    stopping: "🛑",
-    offline: "❌",
-    error: "⚠️",
-    suspended: "⛔",
-    rebooting: "🔃",
+    starting: "Starting 🔃",
+    running: "Online ✅",
+    stopping: "Stopping 🛑",
+    offline: "Offline ❌",
+    error: "Error ⚠️",
+    suspended: "Suspended ⛔",
+    rebooting: "Rebooting 🔃",
 }
 
 const jsoning = require('jsoning')
@@ -24,13 +24,23 @@ async function startUpdatingMessages() {
             try {
                 const guild = bot.guilds.cache.get('765647938469888001');
 
+                if (!guild) return monitoringdb.delete(message.author.id);
+
                 console.log(guild);
                 console.log(allMonitors[userid].message);
                 console.log(allMonitors[userid].channel);
 
                 const channel = guild.channels.cache.get(allMonitors[userid].channel)
-                const message = await channel.messages.fetch(allMonitors[userid].message)
+                if (!channel) return monitoringdb.delete(message.author.id);
+                let message = await channel.messages.fetch(allMonitors[userid].message)
+                if (!message) {
+                    await channel.send("Monitoring servers...(message will update shortly)").then(async newMessage => {
+                        await monitoringdb.set(message.author.id,{channel: newMessage.channelId, message: newMessage.id, guild: newMessage.guildId})
+                        message = await channel.messages.fetch(newMessage.id)
+                    })
+                }
                 const userAPIKey = await pterodactyl.grabAPIKey(bot, userid)
+                if (!userAPIKey) return monitoringdb.delete(message.author.id);
 
                 if (!userAPIKey) {
                     return console.log("No api key!")
@@ -71,12 +81,8 @@ module.exports = {
         cmdargs: []
     },
     async run (bot, message, args) {
-        let newMessageID = ""
-        let channelID = message.channelId
         message.channel.send("Monitoring servers...(message will update shortly)").then(newMessage => {
-            newMessageID = newMessage.id
-
-            monitoringdb.set(message.author.id,{channel: channelID, message: newMessageID})
+            monitoringdb.set(message.author.id,{channel: newMessage.channelId, message: newMessage.id, guild: newMessage.guildId})
         })
     }
 }
