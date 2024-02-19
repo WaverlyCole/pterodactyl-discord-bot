@@ -14,7 +14,7 @@ module.exports = {
         channel.send("Checking key...")
             .then(async sentMessage => {
                 const newkey = args.key
-                const isValid = bot.modules.pterodactyl.checkvalidkey(bot, newkey)
+                const isValid = await bot.modules.pterodactyl.checkvalidkey(bot, newkey)
 
                 if (isValid) {
                     await bot.pterodactylkeys.set(message.author.id,args.key)
