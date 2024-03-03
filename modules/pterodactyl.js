@@ -14,7 +14,7 @@ const grabAPIKey = async (bot, id) => {
 async function checkvalidkey(bot, key) {
     try {
         const response = await axios.get(`${pteroURL}/api/client`, {
-            "headers": {
+            headers: {
                 "Accept": "application/json",
                 "Authorization": `Bearer ${key}`,
             }
@@ -35,12 +35,12 @@ async function restart(bot, key, identifier) {
         const requestURL = `${pteroURL}/api/client/servers/${identifier}/power`
 
         let response = await axios.post(requestURL, {
-            "headers": {
+            headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${key}`,
             },
-            "body": {
+            data: {
                 "signal": "restart"
             }
         })
