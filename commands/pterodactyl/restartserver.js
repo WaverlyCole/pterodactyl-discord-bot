@@ -35,7 +35,7 @@ module.exports = {
 
                 const { MessageEmbed } = require('discord.js');
 
-                const serverSearch = args.server
+                const serverSearch = args.server.toLowerCase()
 
                 for (let key in allServers) {
                     const serverName = key
@@ -44,8 +44,10 @@ module.exports = {
                     console.log(serverSearch)
                     console.log(serverName.includes(serverSearch))
 
-                    if (serverName.includes(serverSearch) || uuid.includes(serverSearch)) {
+                    if (serverName.toLowerCase().includes(serverSearch) || uuid.toLowerCase().includes(serverSearch)) {
                         const status = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier)
+
+                        console.log(status)
 
                         if (status == "running" || status == "offline" || status == "error") {
                             await pterodactyl.restart(bot, userAPIKey, allServers[key].identifier)
