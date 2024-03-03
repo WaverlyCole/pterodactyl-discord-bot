@@ -40,13 +40,9 @@ module.exports = {
                 for (let key in allServers) {
                     const serverName = key
                     const uuid = allServers[key].identifier
-                    
-                    console.log(serverName.toLowerCase().includes(serverSearch))
 
                     if (serverName.toLowerCase().includes(serverSearch) || uuid.toLowerCase().includes(serverSearch)) {
                         const status = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier)
-
-                        console.log(status)
 
                         if (status.current_state == "running" || status.current_state == "offline" || status.current_state == "error") {
                             await pterodactyl.restart(bot, userAPIKey, allServers[key].identifier)

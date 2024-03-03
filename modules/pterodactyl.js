@@ -33,18 +33,18 @@ async function checkvalidkey(bot, key) {
 async function restart(bot, key, identifier) {
     try {
         console.log(key,identifier)
-        const requestURL = `${pteroURL}/api/client/servers/${identifier}/power`
+        const requestURL = `${pteroURL}/api/client/servers/${identifier}/power`;
 
-        let response = await axios.post(requestURL, {
+        const response = await axios.post(requestURL, {
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${key}`,
             },
             data: {
-                signal: "restart"
+                "signal": "restart"
             }
-        })
+        });
 
     console.log(response)
 
@@ -52,10 +52,10 @@ async function restart(bot, key, identifier) {
         throw new Error('Failed to send signal'); 
     }
 
-    serverInfo = response.data;
     webcache.set(requestURL,serverInfo);
 
-        return serverInfo.attributes;
+    return serverInfo.attributes;
+    
     } catch(error) {
         console.log(error);
         return null
