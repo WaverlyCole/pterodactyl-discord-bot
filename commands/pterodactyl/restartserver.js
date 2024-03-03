@@ -40,6 +40,9 @@ module.exports = {
                 for (let key in allServers) {
                     const serverName = key
                     const uuid = allServers[key].identifier
+                    
+                    console.log(serverSearch)
+                    console.log(serverName.includes(serverSearch))
 
                     if (serverName.includes(serverSearch) || uuid.includes(serverSearch)) {
                         const status = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier)
