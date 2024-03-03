@@ -51,8 +51,6 @@ module.exports = {
                         }
                     }
             }
-
-                sentMessage.edit({ content: ' ', embeds: [embed] })
             })
     }
 }
