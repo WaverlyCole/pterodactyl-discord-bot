@@ -4,7 +4,7 @@ const pteroURL = process.env.PTERODACTYLURL;
 const axios = require('axios');
 const NodeCache = require("node-cache");
 
-const webcache = new NodeCache({ stdTTL: 10 });
+const webcache = new NodeCache({ stdTTL: 5 });
 
 const grabAPIKey = async (bot, id) => {
     const key = await bot.pterodactylkeys.get(id);
@@ -60,7 +60,6 @@ async function restart(bot, key, identifier) {
     } catch(error) {
         console.log(error);
         return null
-
     }
 };
 

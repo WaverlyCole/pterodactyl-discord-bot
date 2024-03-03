@@ -41,15 +41,14 @@ module.exports = {
                     const serverName = key
                     const uuid = allServers[key].identifier
                     
-                    console.log(serverSearch)
-                    console.log(serverName.includes(serverSearch))
+                    console.log(serverName.toLowerCase().includes(serverSearch))
 
                     if (serverName.toLowerCase().includes(serverSearch) || uuid.toLowerCase().includes(serverSearch)) {
                         const status = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier)
 
                         console.log(status)
 
-                        if (status == "running" || status == "offline" || status == "error") {
+                        if (status.current_state == "running" || status.current_state == "offline" || status.current_state == "error") {
                             await pterodactyl.restart(bot, userAPIKey, allServers[key].identifier)
                         } else {
                             sentMessage.edit({content: "This server is in the process of starting/stopping and cannot be restarted at this moment."})
