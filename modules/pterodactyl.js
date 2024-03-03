@@ -139,5 +139,6 @@ module.exports = {
     grabAPIKey,
     checkvalidkey,
     getrunningstate,
-    getallservers
+    getallservers,
+    restart
 }
