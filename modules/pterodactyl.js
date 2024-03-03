@@ -34,27 +34,25 @@ async function restart(bot, key, identifier) {
     try {
         const requestURL = `${pteroURL}/api/client/servers/${identifier}/power`
 
-        if (!serverInfo) {
-            let response = await axios.post(requestURL, {
-                "headers": {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${key}`,
-                },
-                "body": {
-                    "signal": "restart"
-                }
-            })
+        let response = await axios.post(requestURL, {
+            "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${key}`,
+            },
+            "body": {
+                "signal": "restart"
+            }
+        })
 
-        console.log(response)
+    console.log(response)
 
-        if (!response.statusText == "OK") {
-            throw new Error('Failed to send signal'); 
-        }
+    if (!response.statusText == "OK") {
+        throw new Error('Failed to send signal'); 
+    }
 
-        serverInfo = response.data;
-        webcache.set(requestURL,serverInfo);
-        }
+    serverInfo = response.data;
+    webcache.set(requestURL,serverInfo);
 
         return serverInfo.attributes;
     } catch(error) {
