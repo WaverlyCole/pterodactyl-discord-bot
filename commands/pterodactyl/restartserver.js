@@ -37,6 +37,11 @@ module.exports = {
 
                 const serverSearch = args.server.toLowerCase()
 
+                if (serverSearch.length < 3) {
+                    sentMessage.edit({ content: 'Search term needs to be at least 3 characters long.'})
+                    return;
+                }
+
                 for (let key in allServers) {
                     const serverName = key
                     const uuid = allServers[key].identifier
