@@ -53,7 +53,10 @@ module.exports = {
                             await pterodactyl.restart(bot, userAPIKey, allServers[key].identifier)
 
                             const startTime = Date.now();
-
+                            function round(num) {
+                                return Math.round(num * 10) / 10
+                            }
+                            
                             while (true) {
                                 const elapsedTime = Date.now() - startTime;
 
