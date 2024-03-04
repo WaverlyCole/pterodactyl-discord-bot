@@ -54,8 +54,8 @@ module.exports = {
 
                             while (true) {
                                 const status = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier,true)
-                                console.log("waiting for server status update")
-                                if (status != "running") {
+                                console.log("waiting for server status update", status.current_state)
+                                if (status.current_state != "running") {
                                     break;
                                 }
                                 await new Promise(resolve => setTimeout(resolve, 1000))
