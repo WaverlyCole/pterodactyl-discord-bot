@@ -56,7 +56,7 @@ module.exports = {
                             function round(num) {
                                 return Math.round(num * 10) / 10
                             }
-                            
+
                             while (true) {
                                 const elapsedTime = Date.now() - startTime;
 
@@ -74,8 +74,11 @@ module.exports = {
                                 
                                 sentMessage.edit({ content: ' ', embeds: [embed] })
 
-                                if (serverInfo.status != "starting") {
+                                if (status.current_state != "starting") {
                                     embed.setTitle(`Finished (${elapsedTime})`)
+                                    if (status.current_state != "running") {
+                                        embed.setDescription("There was an error restarting this server.")
+                                    }
                                     break; // Server is running, exit loop
                                 }
                                 await new Promise(resolve => setTimeout(resolve, 2000)); // 2 seconds
