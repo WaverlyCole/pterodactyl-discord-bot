@@ -69,7 +69,7 @@ module.exports = {
 
                             while (true) {
                                 console.log("Updating")
-                                const elapsedTime = Date.now() - startTime;
+                                const elapsedTime = Math.round((Date.now() - startTime)/1000);
 
                                 embed = new MessageEmbed()
                                     .setTitle(`Server is restarting... (${elapsedTime})`)
@@ -89,7 +89,8 @@ module.exports = {
                                 console.log(status.current_state)
 
                                 if (status.current_state != "rebooting" && status.current_state != "starting") {
-                                    embed.setTitle(`Finished (${elapsedTime})`)
+                                    embed.setTitle(`Finished!`)
+                                    embed.setDescription(`Times elapsed: ${elapsedTime} seconds`)
                                     if (status.current_state != "running") {
                                         embed.setDescription("There was an error restarting this server.")
                                     }

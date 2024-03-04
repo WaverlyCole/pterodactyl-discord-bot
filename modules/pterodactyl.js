@@ -64,7 +64,9 @@ async function getrunningstate(bot, key, identifier, forceUpdate) {
         let serverInfo = webcache.get(requestURL)
 
         if (!serverInfo || forceUpdate == true) {
-            console.log(forceUpdate)
+            if (forceUpdate) {
+                console.log("FORCED UPDATE")
+            }
 
             let response = await axios.get(requestURL, {
                 "headers": {
@@ -78,8 +80,8 @@ async function getrunningstate(bot, key, identifier, forceUpdate) {
                 throw new Error(`Failed to send signal: ${response.statusText}`);
             }
 
-        serverInfo = response.data;
-        webcache.set(requestURL,serverInfo);
+            serverInfo = response.data;
+            webcache.set(requestURL,serverInfo);
         }
 
         return serverInfo.attributes;
