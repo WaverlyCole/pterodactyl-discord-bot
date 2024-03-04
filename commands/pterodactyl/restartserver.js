@@ -52,7 +52,15 @@ module.exports = {
 
                             await pterodactyl.restart(bot, userAPIKey, allServers[key].identifier)
 
-                            await new Promise(resolve => setTimeout(resolve, 1000))
+                            while (true) {
+                                const status = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier,true)
+                                console.log("waiting for server status update")
+                                if (status != "running") {
+                                    break;
+                                }
+                                await new Promise(resolve => setTimeout(resolve, 1000))
+                            }
+                            
 
                             const startTime = Date.now();
                             function round(num) {

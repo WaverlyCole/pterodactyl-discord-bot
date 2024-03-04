@@ -63,7 +63,7 @@ async function getrunningstate(bot, key, identifier, forceUpdate) {
         const requestURL = `${pteroURL}/api/client/servers/${identifier}/resources`
         let serverInfo = webcache.get(requestURL)
 
-        if (!serverInfo || forceUpdate) {
+        if (!serverInfo || forceUpdate == true) {
             let response = await axios.get(requestURL, {
                 "headers": {
                     "Accept": "application/json",
@@ -87,12 +87,12 @@ async function getrunningstate(bot, key, identifier, forceUpdate) {
     }
 };
 
-async function getallservers(bot, key) {
+async function getallservers(bot, key, forceUpdate) {
     try {
         const requestURL = `${pteroURL}/api/client`
         let serverArray = webcache.get(requestURL + key)
 
-        if (!serverArray) {
+        if (!serverArray || forceUpdate == true) {
             const response = await axios.get(requestURL, {
                 "headers": {
                     "Accept": "application/json",
