@@ -82,6 +82,7 @@ module.exports = {
                                 sentMessage.edit({ content: ' ', embeds: [embed] })
                                 await new Promise(resolve => setTimeout(resolve, 1000));
                             }
+                            break;
                         } else {
                             sentMessage.edit({content: "This server is in the process of starting/stopping and cannot be restarted at this moment."})
                         }
