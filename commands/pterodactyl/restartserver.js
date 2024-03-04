@@ -18,7 +18,7 @@ module.exports = {
         ]
     },
     async run (bot, message, args) {
-        message.reply("Checking servers...")
+        message.reply("Working...")
             .then(async sentMessage => {
                 const pterodactyl = bot.modules.pterodactyl
                 const userAPIKey = await pterodactyl.grabAPIKey(bot, message.author.id)
@@ -45,7 +45,38 @@ module.exports = {
                         const status = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier)
 
                         if (status.current_state == "running" || status.current_state == "offline" || status.current_state == "error") {
+                            let embed = new MessageEmbed()
+                                .setTitle('Server is restarting...')
+                            
+                            sentMessage.edit({ content: ' ', embeds: [embed] })
+
                             await pterodactyl.restart(bot, userAPIKey, allServers[key].identifier)
+
+                            const startTime = Date.now();
+
+                            while (true) {
+                                const elapsedTime = Date.now() - startTime;
+
+                                embed = new MessageEmbed()
+                                    .setTitle(`Server is restarting... (${elapsedTime})`)
+
+                                const status = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier)
+                                const maxMem = allServers[key].limits.memory
+                                const currMem = status.resources.memory_bytes / 1024 / 1024
+                                const maxDisk = allServers[key].limits.disk
+                                const currDisk = status.resources.disk_bytes / 1024 / 1024
+                                const cpu = Math.round(status.resources.cpu_absolute)
+
+                                embed.addField(`${status_lookup[status.current_state]} ${key} (${allServers[key].identifier})`, `Mem: ${round(currMem/maxMem*100)}% Cpu: ${cpu}% Disk: ${round(currDisk/maxDisk*100)}%`, false);
+                                
+                                sentMessage.edit({ content: ' ', embeds: [embed] })
+
+                                if (serverInfo.status != "starting") {
+                                    embed.setTitle(`Finished (${elapsedTime})`)
+                                    break; // Server is running, exit loop
+                                }
+                                await new Promise(resolve => setTimeout(resolve, 2000)); // 2 seconds
+                            }
                         } else {
                             sentMessage.edit({content: "This server is in the process of starting/stopping and cannot be restarted at this moment."})
                         }
