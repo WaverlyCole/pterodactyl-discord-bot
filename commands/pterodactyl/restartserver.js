@@ -73,7 +73,6 @@ module.exports = {
     
                                     if (status.current_state != "rebooting" && status.current_state != "starting") {
                                         embed.setTitle(`Finished!`)
-                                        embed.setDescription(`Times elapsed: ${elapsedTime} seconds`)
                                         if (status.current_state != "running") {
                                             embed.setDescription("There was an error restarting this server.")
                                         }
