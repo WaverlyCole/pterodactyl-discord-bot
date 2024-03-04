@@ -18,7 +18,7 @@ module.exports = {
         ]
     },
     async run (bot, message, args) {
-        message.reply("Working...")
+        message.reply("Sending command...")
             .then(async sentMessage => {
                 const pterodactyl = bot.modules.pterodactyl
                 const userAPIKey = await pterodactyl.grabAPIKey(bot, message.author.id)
@@ -45,24 +45,10 @@ module.exports = {
                         const status = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier,true)
 
                         if (status.current_state == "running" || status.current_state == "offline" || status.current_state == "error") {
-                            let embed = new MessageEmbed()
-                                .setTitle('Sending command...')
-                            
-                            sentMessage.edit({ content: ' ', embeds: [embed] })
-
                             await pterodactyl.restart(bot, userAPIKey, allServers[key].identifier)
-
-                            while (true) {
-                                const status = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier,true)
-                                console.log("waiting for server status update", status.current_state)
-                                if (status.current_state != "running") {
-                                    break;
-                                }
-                                await new Promise(resolve => setTimeout(resolve, 500))
-                            }
                             
-
                             const startTime = Date.now();
+
                             function round(num) {
                                 return Math.round(num * 10) / 10
                             }
@@ -75,29 +61,28 @@ module.exports = {
                                     .setTitle(`Server is restarting... (${elapsedTime})`)
                                     .setTimestamp()
 
-                                const status = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier,true)
-                                const maxMem = allServers[key].limits.memory
-                                const currMem = status.resources.memory_bytes / 1024 / 1024
-                                const maxDisk = allServers[key].limits.disk
-                                const currDisk = status.resources.disk_bytes / 1024 / 1024
-                                const cpu = Math.round(status.resources.cpu_absolute)
+                                if (elapsedTime < 20) { //api cache is for 20 seconds, so we need to wait at least that long
+                                    embed.setFooter("The server status will not be updated for at least 20 seconds.")
+                                    embed.addField(`${key} (${allServers[key].identifier})`, status_lookup["rebooting"], false);
+                                } else{
+                                    const status = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier,true);
 
-                                embed.addField(`${status_lookup[status.current_state]} ${key} (${allServers[key].identifier})`, `Mem: ${round(currMem/maxMem*100)}% Cpu: ${cpu}% Disk: ${round(currDisk/maxDisk*100)}%`, false);
+                                    embed.addField(`${key} (${allServers[key].identifier})`, status_lookup[status.current_state], false);
+    
+                                    console.log(status.current_state)
+    
+                                    if (status.current_state != "rebooting" && status.current_state != "starting") {
+                                        embed.setTitle(`Finished!`)
+                                        embed.setDescription(`Times elapsed: ${elapsedTime} seconds`)
+                                        if (status.current_state != "running") {
+                                            embed.setDescription("There was an error restarting this server.")
+                                        }
+                                        break; // Server is running, exit loop
+                                    }
+                                }
                                 
                                 sentMessage.edit({ content: ' ', embeds: [embed] })
-
-                                console.log(status.current_state)
-
-                                if (status.current_state != "rebooting" && status.current_state != "starting") {
-                                    embed.setTitle(`Finished!`)
-                                    embed.setDescription(`Times elapsed: ${elapsedTime} seconds`)
-                                    if (status.current_state != "running") {
-                                        embed.setDescription("There was an error restarting this server.")
-                                    }
-                                    break; // Server is running, exit loop
-                                }
-
-                                await new Promise(resolve => setTimeout(resolve, 2000)); // 2 seconds
+                                await new Promise(resolve => setTimeout(resolve, 1000));
                             }
                         } else {
                             sentMessage.edit({content: "This server is in the process of starting/stopping and cannot be restarted at this moment."})

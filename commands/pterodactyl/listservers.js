@@ -1,11 +1,11 @@
 const status_lookup = {
-    starting: "Starting 🔃",
-    running: "Online ✅",
-    stopping: "Stopping 🛑",
-    offline: "Offline ❌",
-    error: "Error ⚠️",
-    suspended: "Suspended ⛔",
-    rebooting: "Rebooting 🔃",
+    starting: "🔃",
+    running: "✅",
+    stopping: "🛑",
+    offline: "❌",
+    error: "⚠️",
+    suspended: "⛔",
+    rebooting: "🔃",
 }
 
 module.exports = {
@@ -52,7 +52,8 @@ module.exports = {
                     embed.addField(`${status_lookup[status.current_state]} ${key} (${allServers[key].identifier})`, `Mem: ${round(currMem/maxMem*100)}% Cpu: ${cpu}% Disk: ${round(currDisk/maxDisk*100)}%`, false);
             }
 
-                sentMessage.edit({ content: ' ', embeds: [embed] })
+            embed.setFooter("✅=Online ❌=Offline 🔃=Starting 🛑=Stopping")
+            sentMessage.edit({ content: ' ', embeds: [embed] })
             })
     }
 }
