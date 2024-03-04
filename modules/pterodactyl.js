@@ -64,6 +64,8 @@ async function getrunningstate(bot, key, identifier, forceUpdate) {
         let serverInfo = webcache.get(requestURL)
 
         if (!serverInfo || forceUpdate == true) {
+            console.log(forceUpdate)
+
             let response = await axios.get(requestURL, {
                 "headers": {
                     "Accept": "application/json",

@@ -46,7 +46,7 @@ module.exports = {
 
                         if (status.current_state == "running" || status.current_state == "offline" || status.current_state == "error") {
                             let embed = new MessageEmbed()
-                                .setTitle('Server is restarting...')
+                                .setTitle('Sending command...')
                             
                             sentMessage.edit({ content: ' ', embeds: [embed] })
 
