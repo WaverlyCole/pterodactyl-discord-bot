@@ -5,7 +5,7 @@ const status_lookup = {
     offline: "Offline ❌",
     error: "Error ⚠️",
     suspended: "Suspended ⛔",
-    rebooting: "Rebooting 🔃",
+    rebooting: "Restarting 🔃",
 }
 
 module.exports = {
@@ -76,7 +76,7 @@ module.exports = {
                                 
                                 sentMessage.edit({ content: ' ', embeds: [embed] })
 
-                                console.log()
+                                console.log(status.current_state)
 
                                 if (status.current_state != "rebooting") {
                                     embed.setTitle(`Finished (${elapsedTime})`)
