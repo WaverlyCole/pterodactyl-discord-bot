@@ -54,7 +54,6 @@ module.exports = {
                             }
 
                             while (true) {
-                                console.log("Updating")
                                 const elapsedTime = Math.round((Date.now() - startTime)/1000);
 
                                 embed = new MessageEmbed()
@@ -68,8 +67,6 @@ module.exports = {
                                     const status = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier,true);
 
                                     embed.addField(`${key} (${allServers[key].identifier})`, status_lookup[status.current_state], false);
-    
-                                    console.log(status.current_state)
     
                                     if (status.current_state != "rebooting" && status.current_state != "starting") {
                                         embed.setTitle(`Finished!`)
