@@ -20,9 +20,9 @@ async function checkvalidkey(bot, key) {
             }
          })
 
-         if (!response.statusText == "OK") {
-            return false
-         }
+         if (response.status > 300) {
+            throw new Error(`Failed to send signal: ${response.statusText}`);
+        }
 
          return true
     } catch (error) {
@@ -32,35 +32,33 @@ async function checkvalidkey(bot, key) {
 
 async function restart(bot, key, identifier) {
     try {
-        console.log(key,identifier)
+        console.log(key, identifier);
         const requestURL = `${pteroURL}/api/client/servers/${identifier}/power`;
 
         const response = await axios.post(requestURL, {
+            "signal": "restart"
+        }, {
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${key}`,
-            },
-            data: {
-                "signal": "restart"
             }
         });
 
-    console.log(response)
+        console.log(response.data);
 
-    if (!response.statusText == "OK") {
-        throw new Error('Failed to send signal'); 
+        if (response.status >= 200 && response.status < 300) {
+            const serverInfo = response.data;
+            webcache.set(requestURL, serverInfo);
+            return serverInfo.attributes;
+        } else {
+            throw new Error(`Failed to send signal: ${response.statusText}`);
+        }
+    } catch (error) {
+        console.error(error);
+        return null;
     }
-
-    webcache.set(requestURL,serverInfo);
-
-    return serverInfo.attributes;
-    
-    } catch(error) {
-        console.log(error);
-        return null
-    }
-};
+}
 
 async function getrunningstate(bot, key, identifier) {
     try {
@@ -76,9 +74,9 @@ async function getrunningstate(bot, key, identifier) {
                 }
             })
 
-        if (!response.statusText == "OK") {
-            throw new Error('Failed to fetch data'); 
-        }
+            if (response.status > 300) {
+                throw new Error(`Failed to send signal: ${response.statusText}`);
+            }
 
         serverInfo = response.data;
         webcache.set(requestURL,serverInfo);
