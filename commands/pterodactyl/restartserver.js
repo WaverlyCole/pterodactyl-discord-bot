@@ -41,6 +41,10 @@ module.exports = {
                     const serverName = key
                     const uuid = allServers[key].identifier
 
+                    if (uuid = "3995b0cc") {
+                        continue
+                    }
+
                     if (serverName.toLowerCase().includes(serverSearch) || uuid.toLowerCase().includes(serverSearch)) {
                         const status = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier,true)
 
