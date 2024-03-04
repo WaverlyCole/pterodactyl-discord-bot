@@ -58,7 +58,7 @@ module.exports = {
                                 if (status.current_state != "running") {
                                     break;
                                 }
-                                await new Promise(resolve => setTimeout(resolve, 1000))
+                                await new Promise(resolve => setTimeout(resolve, 500))
                             }
                             
 
@@ -88,7 +88,7 @@ module.exports = {
 
                                 console.log(status.current_state)
 
-                                if (status.current_state != "rebooting") {
+                                if (status.current_state != "rebooting" && status.current_state != "starting") {
                                     embed.setTitle(`Finished (${elapsedTime})`)
                                     if (status.current_state != "running") {
                                         embed.setDescription("There was an error restarting this server.")
