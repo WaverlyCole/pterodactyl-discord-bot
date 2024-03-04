@@ -58,16 +58,16 @@ module.exports = {
                                 const elapsedTime = Math.round((Date.now() - startTime)/1000);
 
                                 embed = new MessageEmbed()
-                                    .setTitle(`Server Status`)
+                                    .setTitle(`Server is restarting (${elapsedTime})`)
                                     .setTimestamp()
 
                                 if (elapsedTime < 20) { //api cache is for 20 seconds, so we need to wait at least that long
                                     embed.setFooter("The server status will not be updated for at least 20 seconds.")
-                                    embed.addField(`${key} (${allServers[key].identifier})`, `${status_lookup["rebooting"]} (${elapsedTime})`, false);
+                                    embed.addField(`${key} (${allServers[key].identifier})`, status_lookup["rebooting"], false);
                                 } else{
                                     const status = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier,true);
 
-                                    embed.addField(`${key} (${allServers[key].identifier})`, `${status_lookup[status.current_state]} (${elapsedTime})`, false);
+                                    embed.addField(`${key} (${allServers[key].identifier})`, status_lookup[status.current_state], false);
     
                                     console.log(status.current_state)
     
