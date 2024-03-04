@@ -48,9 +48,7 @@ async function restart(bot, key, identifier) {
         console.log(response.data);
 
         if (response.status >= 200 && response.status < 300) {
-            const serverInfo = response.data;
-            webcache.set(requestURL, serverInfo);
-            return serverInfo.attributes;
+            return true;
         } else {
             throw new Error(`Failed to send signal: ${response.statusText}`);
         }
