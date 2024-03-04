@@ -32,7 +32,6 @@ async function checkvalidkey(bot, key) {
 
 async function restart(bot, key, identifier) {
     try {
-        console.log(key, identifier);
         const requestURL = `${pteroURL}/api/client/servers/${identifier}/power`;
 
         const response = await axios.post(requestURL, {
