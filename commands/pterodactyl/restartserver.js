@@ -42,7 +42,7 @@ module.exports = {
                     const uuid = allServers[key].identifier
 
                     if (serverName.toLowerCase().includes(serverSearch) || uuid.toLowerCase().includes(serverSearch)) {
-                        const status = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier)
+                        const status = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier,true)
 
                         if (status.current_state == "running" || status.current_state == "offline" || status.current_state == "error") {
                             let embed = new MessageEmbed()
@@ -58,12 +58,14 @@ module.exports = {
                             }
 
                             while (true) {
+                                console.log("Updating")
                                 const elapsedTime = Date.now() - startTime;
 
                                 embed = new MessageEmbed()
                                     .setTitle(`Server is restarting... (${elapsedTime})`)
+                                    .setTimestamp()
 
-                                const status = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier)
+                                const status = await pterodactyl.getrunningstate(bot, userAPIKey, allServers[key].identifier,true)
                                 const maxMem = allServers[key].limits.memory
                                 const currMem = status.resources.memory_bytes / 1024 / 1024
                                 const maxDisk = allServers[key].limits.disk
@@ -73,6 +75,8 @@ module.exports = {
                                 embed.addField(`${status_lookup[status.current_state]} ${key} (${allServers[key].identifier})`, `Mem: ${round(currMem/maxMem*100)}% Cpu: ${cpu}% Disk: ${round(currDisk/maxDisk*100)}%`, false);
                                 
                                 sentMessage.edit({ content: ' ', embeds: [embed] })
+
+                                console.log()
 
                                 if (status.current_state != "starting") {
                                     embed.setTitle(`Finished (${elapsedTime})`)

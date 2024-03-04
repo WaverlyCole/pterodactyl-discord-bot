@@ -58,12 +58,12 @@ async function restart(bot, key, identifier) {
     }
 }
 
-async function getrunningstate(bot, key, identifier) {
+async function getrunningstate(bot, key, identifier, forceUpdate) {
     try {
         const requestURL = `${pteroURL}/api/client/servers/${identifier}/resources`
         let serverInfo = webcache.get(requestURL)
 
-        if (!serverInfo) {
+        if (!serverInfo || forceUpdate) {
             let response = await axios.get(requestURL, {
                 "headers": {
                     "Accept": "application/json",
