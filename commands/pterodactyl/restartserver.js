@@ -52,6 +52,8 @@ module.exports = {
 
                             await pterodactyl.restart(bot, userAPIKey, allServers[key].identifier)
 
+                            await new Promise(resolve => setTimeout(resolve, 1000))
+
                             const startTime = Date.now();
                             function round(num) {
                                 return Math.round(num * 10) / 10
@@ -85,6 +87,7 @@ module.exports = {
                                     }
                                     break; // Server is running, exit loop
                                 }
+
                                 await new Promise(resolve => setTimeout(resolve, 2000)); // 2 seconds
                             }
                         } else {
