@@ -46,7 +46,7 @@ module.exports = {
                     const serverName = key
                     const uuid = allServers[key].identifier
 
-                    if (uuid = "3995b0cc") {
+                    if (uuid == "3995b0cc") {
                         continue
                     }
 
