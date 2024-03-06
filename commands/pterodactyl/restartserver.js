@@ -77,7 +77,7 @@ module.exports = {
 
                                     embed.addField(`${key} (${allServers[key].identifier})`, status_lookup[status.current_state], false);
     
-                                    if (status.current_state != "rebooting" && status.current_state != "starting") {
+                                    if (status.current_state != "rebooting" && status.current_state != "starting" && status.current_state != "stopping") {
                                         embed.setTitle(`Finished!`)
                                         if (status.current_state != "running") {
                                             embed.setDescription("There was an error restarting this server.")
@@ -89,7 +89,7 @@ module.exports = {
                                 }
                                 
                                 sentMessage.edit({ content: ' ', embeds: [embed] })
-                                await new Promise(resolve => setTimeout(resolve, 3000));
+                                await new Promise(resolve => setTimeout(resolve, 5000));
                             }
                         } else {
                             sentMessage.edit({content: "This server is in the process of starting/stopping and cannot be restarted at this moment."})
