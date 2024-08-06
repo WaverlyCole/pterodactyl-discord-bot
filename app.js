@@ -118,7 +118,7 @@ bot.on("messageCreate", async message => {
 
         let userRnk = bot.modules.ranks.get(message.author.id)
         console.log("userRnk",userRnk,commandfile.rnk)
-        if (userRnk >= commandfile.rnk) {
+        if (userRnk >= commandfile.config.rnk) {
             commandfile.run(bot, message, commandArgs);
         } else {
             message.channel.send('Insufficient permissions')
