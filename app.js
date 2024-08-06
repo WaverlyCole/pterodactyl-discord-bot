@@ -117,7 +117,7 @@ bot.on("messageCreate", async message => {
         }
 
         let userRnk = bot.modules.ranks.get(message.author.id)
-        console.log("userRnk",userRnk)
+        console.log("userRnk",userRnk,commandfile.rnk)
         if (userRnk >= commandfile.rnk) {
             commandfile.run(bot, message, commandArgs);
         } else {
