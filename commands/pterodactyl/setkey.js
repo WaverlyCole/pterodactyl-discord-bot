@@ -2,7 +2,7 @@ module.exports = {
     config: {
         name: 'setkey',
         description: 'Set your pterodactyl API key',
-        rnk: 'User',
+        rnk: 0,
         cmdargs: [
             {name: 'key', type: 'string', required: true},
         ]

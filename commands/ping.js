@@ -2,7 +2,7 @@ module.exports = {
     config: {
         name: 'ping',
         description: 'Get ping of the bot',
-        rnk: 'Admin',
+        rnk: 0,
         cmdargs: [
             {name: 'message', type: 'string', required: false},
         ]

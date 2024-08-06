@@ -2,7 +2,7 @@ module.exports = {
     config: {
         name: 'getkey',
         description: 'Check your pterodactyl API key',
-        rnk: 'User',
+        rnk: 0,
         cmdargs: []
     },
     async run (bot, message, args) {

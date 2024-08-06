@@ -93,7 +93,7 @@ module.exports = {
     config: {
         name: 'setmonitorchannel',
         description: 'Sets a channel to monitor your servers.',
-        rnk: 'User',
+        rnk: 3,
         cmdargs: []
     },
     async run (bot, message, args) {

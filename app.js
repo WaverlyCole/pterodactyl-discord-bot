@@ -115,7 +115,14 @@ bot.on("messageCreate", async message => {
                 }
             }
         }
-        commandfile.run(bot, message, commandArgs);
+
+        let userRnk = bot.modules.ranks.get(message.author.id)
+        if (userRnk >= commandfile.rnk) {
+            commandfile.run(bot, message, commandArgs);
+        } else {
+            message.channel.send('Insufficient permissions')
+        }
+        
     } else {
         message.channel.send('No command was found.')
     }

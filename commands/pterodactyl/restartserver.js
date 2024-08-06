@@ -12,7 +12,7 @@ module.exports = {
     config: {
         name: 'restartserver',
         description: 'Restart a server by id or name',
-        rnk: 'User',
+        rnk: 0,
         cmdargs: [
             {name: 'server', type: 'string', required: true},
         ]

@@ -12,7 +12,7 @@ module.exports = {
     config: {
         name: 'listservers',
         description: 'List all your servers',
-        rnk: 'User',
+        rnk: 0,
         cmdargs: []
     },
     async run (bot, message, args) {
