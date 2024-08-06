@@ -52,6 +52,19 @@ for (const file of eventFiles) {
 }
 
 //Command Manager
+function parseUserId(arg) {
+    const mentionMatch = arg.match(/^<@!?(\d+)>$/);
+    if (mentionMatch) {
+        return mentionMatch[1];
+    }
+
+    if (/^\d+$/.test(arg)) {
+        return arg;
+    }
+
+    return null;
+}
+
 bot.on("messageCreate", async message => {
     //Check if author is a bot
     if(message.author.bot) return;
@@ -99,19 +112,28 @@ bot.on("messageCreate", async message => {
     if (commandfile) {
         let commandArgs = {}
         for (let i = 0; i < commandfile.config.cmdargs.length; i++) {
-            const argumentdata = commandfile.config.cmdargs[i]
-
-            if (!args[i] && argumentdata.required) return message.channel.send(`The argument ${argumentdata.name} (${argumentdata.type}) is required.`);
-            
+            const argumentdata = commandfile.config.cmdargs[i];
+        
+            if (!args[i] && argumentdata.required) {
+                return message.channel.send(`The argument ${argumentdata.name} (${argumentdata.type}) is required.`);
+            }
+        
             if (args[i]) {
-                if (argumentdata.type == 'string' && typeof args[i] == 'string') {
-                    let parsedString = args.slice(i).join(" ")
-                    commandArgs[argumentdata.name] = parsedString
-                } else if (argumentdata.type == 'integer' && typeof parseInt(args[i]) == 'number' ) {
-                    const parsedInt = parseInt(args[i])
-                    commandArgs[argumentdata.name] = parsedInt
+                if (argumentdata.type === 'string' && typeof args[i] === 'string') {
+                    let parsedString = args.slice(i).join(" ");
+                    commandArgs[argumentdata.name] = parsedString;
+                } else if (argumentdata.type === 'integer' && !isNaN(parseInt(args[i]))) {
+                    const parsedInt = parseInt(args[i]);
+                    commandArgs[argumentdata.name] = parsedInt;
+                } else if (argumentdata.type === 'userid') {
+                    const userId = parseUserId(args[i]);
+                    if (userId) {
+                        commandArgs[argumentdata.name] = userId;
+                    } else {
+                        return message.channel.send(`The argument ${argumentdata.name} (${argumentdata.type}) must be a valid user ID or mention.`);
+                    }
                 } else {
-                    commandArgs[argumentdata.name] = args[i]
+                    commandArgs[argumentdata.name] = args[i];
                 }
             }
         }
