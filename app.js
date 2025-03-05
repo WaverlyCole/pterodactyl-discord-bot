@@ -1,14 +1,17 @@
-console.log('starting')
-require('dotenv').config()
-const prefix = require("./config.json").prefix;
+console.log('starting');
 
-const { Client, Intents, Collection } = require('discord.js')
-const bot = require('./bot').bot;
+import dotenv from 'dotenv';
+dotenv.config();
 
-const fs = require("fs")
+import { prefix } from './config.json';  // Use import for JSON as well
+import { Client, Intents, Collection } from 'discord.js';
+import { bot } from './bot';  // Assuming 'bot' is exported from './bot.js'
 
+import fs from 'fs';
 import jsoning from 'jsoning';
-bot.db = new jsoning('db.json')
+
+// Setting up the database
+bot.db = new jsoning('db.json');
 bot.pterodactylkeys = new jsoning('pterodactylapis.json');
 
 bot.commands = new Collection()
