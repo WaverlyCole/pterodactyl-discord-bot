@@ -7,7 +7,7 @@ const bot = require('./bot').bot;
 
 const fs = require("fs")
 
-const jsoning = require('jsoning')
+import jsoning from 'jsoning';
 bot.db = new jsoning('db.json')
 bot.pterodactylkeys = new jsoning('pterodactylapis.json');
 
