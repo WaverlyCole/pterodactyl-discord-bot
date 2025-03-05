@@ -19,7 +19,7 @@ bot.modules = {}
 
 const moduleFiles = fs.readdirSync('./modules/').filter(f => f.endsWith('.js'))
 for (const file of moduleFiles) {
-    const props = require(`./modules/${file}`)
+    const props = await import(`./modules/${file}`);
     console.log(`${file} loaded`)
     const trimmedFilename = file.replace(/\.js$/, '');
     bot.modules[trimmedFilename] = props
@@ -27,7 +27,7 @@ for (const file of moduleFiles) {
 
 const commandFiles = fs.readdirSync('./commands/').filter(f => f.endsWith('.js'))
 for (const file of commandFiles) {
-    const props = require(`./commands/${file}`)
+    const props = await import(`./commands/${file}`);
     console.log(`${file} loaded`)
     bot.commands.set(props.config.name, props)
 }
@@ -37,7 +37,7 @@ const commandSubFolders = fs.readdirSync('./commands/').filter(f => !f.endsWith(
 commandSubFolders.forEach(folder => {
     const commandFiles = fs.readdirSync(`./commands/${folder}/`).filter(f => f.endsWith('.js'))
     for (const file of commandFiles) {
-        const props = require(`./commands/${folder}/${file}`)
+        const props = await import(`./commands/${folder}/${file}`);
         console.log(`${file} loaded from ${folder}`)
         bot.commands.set(props.config.name, props)
     }
@@ -47,7 +47,7 @@ commandSubFolders.forEach(folder => {
 const eventFiles = fs.readdirSync('./events/').filter(f => f.endsWith('.js'))
 
 for (const file of eventFiles) {
-    const event = require(`./events/${file}`)
+    const event = await import(`./events/${file}`);
     if(event.once) {
         bot.once(event.name, (...args) => event.execute(...args, bot))
     } else {
