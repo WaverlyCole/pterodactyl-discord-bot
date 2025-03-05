@@ -1,3 +1,4 @@
+console.log('starting')
 require('dotenv').config()
 const prefix = require("./config.json").prefix;
 
